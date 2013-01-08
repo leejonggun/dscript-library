@@ -1,0 +1,27 @@
+// written by Joseph
+
+import("dshell");
+import("konoha.json");
+
+const DCaseContext = Json;
+
+String host = "";
+
+boolean Ping_gateway(DCaseContext ctx) {
+	boolean ret = true;
+	host = ctx.getString("hostname");
+//	String str = $(ip route show | grep "default via");
+	String str = $(ip route show | grep "default");
+	host = str.substring(12, 25);
+	System.p(host);
+	ping "${host}" -c 2;
+	return ($? == 0);
+}
+
+void main() {
+	DCaseContext ctx = new DCaseContext();
+	ctx.setString("hostname", "192.168.59.1");
+	System.p(Ping_gateway(ctx));
+}
+
+main();

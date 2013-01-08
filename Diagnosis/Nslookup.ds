@@ -9,20 +9,21 @@ const DCaseContext = Json;
 String host = "";
 
 boolean Nslookup(DCaseContext ctx) {
-	host = ctx.getString("hostname");
-	String res = $(nslookup "${host}" -timeout=1);
+//	host = ctx.getString("hostname");
+	String res = $(nslookup "${host}" -timeout=5);
 	if (res.search("server can't find") == -1) {
 		System.p("Name Resolution Success.");
 		return true;
 	} else {
-		System.p("Host is not found.");
+		System.p("Name Resolution Failed.");
 		return false;
 	}
 }
 
 void main() {
 	DCaseContext ctx = new DCaseContext();
-	ctx.setString("hostname", "www.google.com");
+//	ctx.setString("hostname", "hogehoge");
+	host = SCRIPT_ARGV.get(1);
 	Nslookup(ctx);
 }
 
