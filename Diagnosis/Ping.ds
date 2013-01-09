@@ -9,11 +9,14 @@ String host = "";
 
 boolean Ping(DCaseContext ctx) {
 	host = ctx.getString("hostname");
+	String lookup = "";
 	ping "${host}" -c 2;
+	System.p($?);
 	if ($? == 0) {//Success
-		System.p("Network path to the server is connected");
+		System.p("Success:Network path to the server is connected");
 		return true;
-	} else if ($? == 1) {
+
+	} else if ($? == 1) {//ping is unreachable
 		String res = $(ping "${host}" -c 2);
 		System.p(res);
 		if (res.search("Destination Host Unreachable") != -1) {//Network involves the host is found, but the host is not found.
@@ -22,7 +25,7 @@ boolean Ping(DCaseContext ctx) {
 		} else if (res.search("Destination Net Unreachable") != -1) {//Network is not found.
 			System.p("SystemFault:Dafault gateway is not set.");
 			return false;
-		} else if (res.search("Time to live exceeded") != -1) {//TTL is too little
+		} else if (res.search("Time to live exceeded") != -1) {//TTL is set too little
 			System.p("ExternalFault:It's too far to the server.");
 			return false;
 //		} else if (res.search("Request timed out") != -1) {
@@ -30,15 +33,19 @@ boolean Ping(DCaseContext ctx) {
 			System.p("ExternalFault:Server doesn't respond.");
 			return false;
 		}
-	} else if ($? == 2) {
-		String lookup = $(minikonoha Nslookup.ds "${host}");
-		if (lookup.search("Failed") != -1) {
+
+	} else if ($? == 2) {//Errors. can't do ping
+		System.p(host);
+		lookup = $(minikonoha Nslookup.ds "${host}");
+		System.p(lookup);
+		if (lookup.search("false") != -1) {
 			System.p("nslookup failed");
-			System.p("SystemFault:Hostname is not found. The host is not in Nameserver");
+			System.p("SystemFault:Hostname is not found. The host is not on Nameserver");//nsloop
 			return false;
 		}
 		System.p("nslookup success");
-		System.p("ExternalFault:The server doesn't allow ping.");
+		System.p("ExternalFault:The server doesn't allow ping.");//Server's firewall setting drops all.
+		System.p("connect:Network is unreachable.");
 		return false;
 	}
 	System.p("Ping.ds is not working");
@@ -49,8 +56,9 @@ void main() {
 	DCaseContext ctx = new DCaseContext();
 //	ctx.setString("hostname", "hoge");
 //	ctx.setString("hostname", "192.168.59.211");
-	ctx.setString("hostname", "74.125.205.211");
+//	ctx.setString("hostname", "74.125.205.211");
 //	ctx.setString("hostname", "www.google.com");
+	ctx.setString("hostname", "www.amazon.com");
 	System.p(Ping(ctx));
 }
 
