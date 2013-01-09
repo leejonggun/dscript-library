@@ -3,13 +3,14 @@
 import("dshell");
 import("konoha.json");
 
-const DCaseContext = Json;
+//const DCaseContext = Json;
 
 String host = "";
 
-boolean Ping_gateway(DCaseContext ctx) {
+//boolean Ping_gateway(DCaseContext ctx) {
+boolean Ping_gateway() {
 	boolean ret = true;
-	host = ctx.getString("hostname");
+//	host = ctx.getString("hostname");
 //	String str = $(ip route show | grep "default via");
 	String str = $(ip route show | grep "default");
 	host = str.substring(12, 25);
@@ -19,9 +20,10 @@ boolean Ping_gateway(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
-	ctx.setString("hostname", "192.168.59.1");
-	System.p(Ping_gateway(ctx));
+//	DCaseContext ctx = new DCaseContext();
+//	ctx.setString("hostname", "192.168.59.1");
+//	System.p(Ping_gateway(ctx));
+	System.p(Ping_gateway());
 }
 
 main();
