@@ -10,39 +10,25 @@ String host = "";
 String DNS  = "";
 
 boolean Nslookup(DCaseContext ctx) {
-//	host = ctx.getString("hostname");
+	host = ctx.getString("hostname");
 //First try nslookup
 	String res = $(nslookup "${host}" -timeout=1);
 
-	if (res.search("server can't find") != -1) {//The hostname doesn't exist
-		System.p("Name Resolution Failed.");
-		if (res.search("REFUSED") != -1) {
-			System.p("SystemFault:Network is disconnected.");
-			return false;
-		}
-
-		DNS = $(ip route show | grep "default").substring(12, 24);
-//Second try nslookup
-		res = $(nslookup "${host}" "${DNS}" -timeout=1);
-		echo "nslookup ${host} ${DNS} -timeout=1";
-		if (res.search("NXDOMAIN") != -1) {//The hostname doesn't exist
-			System.p("SystemFault:Given Hostname(${host}) is not on the DNS server.");
-		} else if (res.search("connection timed out") != -1) {//The router DNS server is down
-			System.p("SystemFault:DNS server of the router is down.");
-		}
+	if (res.search("REFUSED") != -1) {
+		System.p("SystemFault:Network is disconnected.");
 		return false;
-
+	} else if (res.search("NXDOMAIN") != -1) {//The hostname doesn't exist
+		System.p("SystemFault:Given Hostname(${host}) is not on the DNS server.");
+		return false;
 	} else if (res.search("connection timed out") != -1) {//Default DNS server is not working
-		System.p("No DNS server found.");
+		System.p("DNS server doesn't respond.");
 		DNS = $(ip route show | grep "default").substring(12, 24);//find DNS server on the default gateway
-		System.p(DNS);
 //Second try nslookup
 		res = $(nslookup "${host}" "${DNS}" -timeout=1);
-		echo "nslookup ${host} ${DNS} -timeout=1";
 		if (res.search("connection timed out") != -1) {//DNS server on the default gateway is not working
-			System.p("SystemFault:DNS server doesn't have the name.");
+			System.p("SystemFault:DNS server doesn't have the domain name(${host}).");
 		} else {//DNS server on the default gateway is working
-			System.p("SystemFault:DNS server setting is missing.");
+			System.p("SystemFault:DNS server setting is wrong.");
 		}
 		return false;
 
@@ -54,8 +40,7 @@ boolean Nslookup(DCaseContext ctx) {
 
 void main() {
 	DCaseContext ctx = new DCaseContext();
-//	ctx.setString("hostname", "hogehoge");
-	host = SCRIPT_ARGV.get(1);
+	ctx.setString("hostname", SCRIPT_ARGV.get(1));
 	System.p(Nslookup(ctx));
 }
 
