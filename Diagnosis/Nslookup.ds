@@ -27,6 +27,7 @@ boolean Nslookup(DCaseContext ctx) {
 		res = $(nslookup "${host}" "${DNS}" -timeout=1);
 		if (res.search("connection timed out") != -1) {//DNS server on the default gateway is not working
 			System.p("SystemFault:DNS server doesn't have the domain name(${host}).");
+			System.p("SystemFault:Or, Firewall OUTPUT is drop all packets.");
 		} else {//DNS server on the default gateway is working
 			System.p("SystemFault:DNS server setting is wrong.");
 		}
