@@ -10,10 +10,15 @@ String resolv = "";
 
 boolean CheckDNS(DCaseContext ctx) {
 	resolv = ctx.getString("resolv");
+//get nameserver ip address
 	resolv = $(cat "${resolv}" | grep "nameserver");
+	System.p(resolv);
 	nameserver = resolv.split(" ").get(1);
-	System.p(nameserver);
+//ping to the nameserver & check it works
 	ping "${nameserver}" -c 2 > /dev/null;
+	if ($? == 0) {
+		System.p("DNS server works.");
+	}
 	return ($? == 0);
 }
 

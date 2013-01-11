@@ -8,3 +8,7 @@ sudo iptables -P FORWARD DROP
 sudo iptables -A OUTPUT -p icmp --icmp-type echo-request -j ACCEPT
 sudo iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
 sudo iptables -L
+
+echo "ping Test"
+ping www.google.com -c 3
+echo "Test End"

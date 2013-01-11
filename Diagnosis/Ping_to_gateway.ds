@@ -3,27 +3,34 @@
 import("dshell");
 import("konoha.json");
 
-//const DCaseContext = Json;
+const DCaseContext = Json;
 
 String host = "";
 
-//boolean Ping_gateway(DCaseContext ctx) {
-boolean Ping_gateway() {
+boolean Ping_gateway(DCaseContext ctx) {
 	boolean ret = true;
-//	host = ctx.getString("hostname");
 //	String str = $(ip route show | grep "default via");
 	String str = $(ip route show | grep "default");
-	host = str.substring(12, 25);
+	System.p(str);
+
+//get router's IP Address
+//	host = str.substring("default via ".length(), str.search("dev"));
+	host = str.substring(str.search("192"), str.search("dev"));
 	System.p(host);
+
+//ping to the default gateway(router).
 	ping "${host}" -c 2;
+	System.p($?);
+//This test works when I test the Network cable is connected or not. The fail of this ping test means firewall doesn't allow ping, or ICMP request.
+	if ($? != 0) {
+		sudo iptables -L | grep "DROP";
+	}
 	return ($? == 0);
 }
 
 void main() {
-//	DCaseContext ctx = new DCaseContext();
-//	ctx.setString("hostname", "192.168.59.1");
-//	System.p(Ping_gateway(ctx));
-	System.p(Ping_gateway());
+	DCaseContext ctx = new DCaseContext();
+	System.p(Ping_gateway(ctx));
 }
 
 main();

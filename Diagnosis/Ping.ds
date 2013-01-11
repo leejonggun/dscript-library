@@ -2,6 +2,7 @@
 
 import("dshell");
 import("konoha.json");
+import("cstyle");
 
 const DCaseContext = Json;
 
@@ -11,12 +12,13 @@ boolean Ping(DCaseContext ctx) {
 	host = ctx.getString("hostname");
 	String lookup = "";
 
+//check whether network cable is connected or not
 	int default_gateway = $(ip route show).search("default");
 	if (default_gateway == -1) {
 		System.p("Network is disconnected. Please connect to the network.");
 		return false;
 	};
-	
+
 	ping "${host}" -c 2 > /dev/null;
 	System.p($?);
 	if ($? == 0) {//Success
@@ -33,6 +35,7 @@ boolean Ping(DCaseContext ctx) {
 			if (lookup.search("true") > 0) {
 				System.p("ExternalFault:Server doesn't respond. The server doesn't allow ping.");
 			}
+			System.p("SystemFault:Name Resolution is failed.");
 			return false;
 		} else if (res.search("Destination Host Unreachable") != -1) {//Network involves the host is found, but the host is not found.
 			System.p("ExternalFault:Host is not found.");
