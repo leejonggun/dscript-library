@@ -13,16 +13,17 @@ boolean Ping(DCaseContext ctx) {
 	String lookup = "";
 
 //check whether network cable is connected or not
-	int default_gateway = $(ip route show).search("default");
-	if (default_gateway == -1) {
-		System.p("Network is disconnected. Please connect to the network.");
+	String connection = $(minikonoha Connection.ds);
+	System.p(connection);
+	if (connection.search("true") == -1) {
+		System.p("Network is disconnected.Please plug the network cable.");
 		return false;
-	};
+	}
 
 //check whether default gateway(router) is set properly or not.
-	String midret = $(minikonoha Ping_to_gateway.ds);
-	System.p(midret);
-	if (midret.search("true") == -1) {
+	String mid_ret = $(minikonoha Ping_to_gateway.ds);
+	System.p(mid_ret);
+	if (mid_ret.search("true") == -1) {
 		System.p("SystemFault:Something on your firewall setting is wrong.");
 		return false;
 	}
@@ -42,6 +43,7 @@ boolean Ping(DCaseContext ctx) {
 			lookup = $(minikonoha Nslookup.ds "${host}");
 			if (lookup.search("true") > 0) {
 				System.p("ExternalFault:Server doesn't respond. The server doesn't allow ping.");
+				return false;
 			}
 			System.p("SystemFault:Name Resolution is failed.");
 			return false;
@@ -51,7 +53,7 @@ boolean Ping(DCaseContext ctx) {
 		} else if (res.search("Destination Net Unreachable") != -1) {//Network is not found.
 			System.p("SystemFault:Dafault gateway setting is wrong.");
 			String default_gateway = $(ip route show | grep "default");
-			System.p(default_gateway);
+			System.p(default_gateway + ". This gateway is not working.");
 			return false;
 		} else if (res.search("Operation not permitted") != -1) {//firewall doesn't allow ping.
 			sudo iptables -L | grep "DROP";
@@ -61,7 +63,8 @@ boolean Ping(DCaseContext ctx) {
 			System.p("ExternalFault:It's too far to the server.");
 			return false;
 		}
-	} else if ($? == 2) {//Errors. can't do ping
+
+	} else if ($? == 2) {//Errors. can't ping
 		System.p(host);
 		lookup = $(minikonoha Nslookup.ds "${host}");
 		System.p(lookup);

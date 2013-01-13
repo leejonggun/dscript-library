@@ -1,0 +1,25 @@
+// written by Joseph
+
+import("dshell");
+import("konoha.json");
+
+const DCaseContext = Json;
+
+boolean Connection(DCaseContext ctx) {
+	boolean ret = true;
+
+//check whether network cable is connected or not
+	int gateway = $(ip route show).search("default");
+	if (gateway == -1) {
+		System.p("Network is disconnected. Your PC doesn't connect to a router. Please plug the network cable.");
+		return false;
+	};
+	return ret;
+}
+
+void main() {
+	DCaseContext ctx = new DCaseContext();
+	System.p(Connection(ctx));
+}
+
+main();

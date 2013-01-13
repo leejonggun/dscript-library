@@ -5,27 +5,36 @@ import("konoha.json");
 
 const DCaseContext = Json;
 
-String host = "";
+String gateway = "";
 
 boolean Ping_gateway(DCaseContext ctx) {
 	boolean ret = true;
 //	String str = $(ip route show | grep "default via");
 	String str = $(ip route show | grep "default");
-	System.p(str);
+//	System.p(str);
 
 //get router's IP Address
-//	host = str.substring("default via ".length(), str.search("dev"));
-	host = str.substring(str.search("192"), str.search("dev"));
-	System.p(host);
+//	gateway = str.substring("default via ".length(), str.search("dev"));
+	gateway = str.substring(str.search("192"), str.search("dev"));
+	System.p(gateway);
 
 //ping to the default gateway(router).
-	ping "${host}" -c 2;
+	ping "${gateway}" -c 2 > /dev/null;
 	System.p($?);
+	ret = ($? == 0);
 //This test works when I test the Network cable is connected or not. The fail of this ping test means firewall doesn't allow ping, or ICMP request.
 	if ($? != 0) {
-		sudo iptables -L | grep "DROP";
+		System.p("ping to the default gateway is failed.");
+		String setting = $(sudo iptables -L | grep "DROP");
+		if (setting.search("INPUT") != -1) {
+			System.p("INPUT packet is dropped.");
+		} else if (setting.search("OUTPUT") != -1) {
+			System.p("OUTPUT packet is dropped.");
+		} else if (setting.search("icmp") != -1) {
+			System.p("icmp echo-request is dropped. Your PC doesn't allow ping.");
+		}
 	}
-	return ($? == 0);
+	return ret;
 }
 
 void main() {
