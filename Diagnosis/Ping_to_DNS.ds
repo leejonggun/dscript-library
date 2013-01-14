@@ -8,14 +8,17 @@ const DCaseContext = Json;
 String nameserver = "";
 String resolv = "";
 
-boolean CheckDNS(DCaseContext ctx) {
+boolean Ping_to_DNS(DCaseContext ctx) {
 	boolean ret = true;
 	resolv = ctx.getString("resolv");
 
 //get nameserver ip address
-	cat "${resolv}" | grep "nameserver" > /dev/null;
+	resolv = $(cat "${resolv}" | grep "nameserver");
+	System.p(resolv);
+	nameserver = resolv.split(" ").get(1);
 
-//"grep" doesn't get any string, then return status will be 0
+//ping to the nameserver & check it works
+	ping "${nameserver}" -c 2 > /dev/null;
 	ret = ($? == 0);
 	return ret;
 }
@@ -23,7 +26,8 @@ boolean CheckDNS(DCaseContext ctx) {
 void main() {
 	DCaseContext ctx = new DCaseContext();
 	ctx.setString("resolv", "/etc/resolv.conf");
-	System.p(CheckDNS(ctx));
+	System.p(Ping_to_DNS(ctx));
 }
 
 main();
+

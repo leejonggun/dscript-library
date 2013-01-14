@@ -41,7 +41,7 @@ boolean check_host_or_address(String[] given_host) {
 		return true;
 	}
 
-	System.p("ERROR:IPCheck.ds");
+	System.p("ERROR:IPCheck.ds.");
 	return false;
 }
 

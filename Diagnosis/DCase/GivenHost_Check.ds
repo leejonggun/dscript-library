@@ -27,25 +27,12 @@ boolean check_host_or_address(String[] given_host) {
 		}
 
 	} else {
-		String str = $(ip route show | grep "default");
-		String[] gateway = str.substring(str.search("192"), str.search("dev")).split(".");
-		while (i < gateway.getlength() - 1) {
-			tmpIP = given_host.get(i);
-			if (tmpIP != gateway.get(i)) {
-				System.p("given IP Address is out of LAN.");
-				return false;
-			}
-			i = i + 1;
-		}
-		System.p("given IP Address is in a LAN.");
-		return true;
+		System.p("The given is not a HostName.");
+		return false;
 	}
-
-	System.p("ERROR:IPCheck.ds");
-	return false;
 }
 
-boolean IPCheck(DCaseContext ctx) {
+boolean Given_HostName(DCaseContext ctx) {
 	boolean ret = true;
 	host = ctx.getString("hostname");
 
@@ -59,7 +46,7 @@ boolean IPCheck(DCaseContext ctx) {
 void main() {
 	DCaseContext ctx = new DCaseContext();
 	ctx.setString("hostname", SCRIPT_ARGV.get(1));
-	System.p(IPCheck(ctx));
+	System.p(Given_HostName(ctx));
 }
 
 main();
