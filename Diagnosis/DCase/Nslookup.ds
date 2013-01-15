@@ -14,14 +14,14 @@ boolean Nslookup(DCaseContext ctx) {
 
 //check DNS is recognised.
 	String check = $(minikonoha CheckDNS.ds);
-	System.p(check);
+//	System.p(check);
 	if (check.search("false") > -1) {
 		return false;
 	}
 
 //check whether DNS respond or not
 	check = $(minikonoha Ping_to_DNS.ds);
-	System.p(check);
+//	System.p(check);
 	if (check.search("false") > -1) {
 		return false;
 	}
@@ -29,12 +29,14 @@ boolean Nslookup(DCaseContext ctx) {
 //First try nslookup
 	String res = $(nslookup "${host}" -timeout=1);
 
-	if (res.search("REFUSED") != -1) {
-		System.p("SystemFault:Network is disconnected.");
-		return false;
-	} else if (res.search("NXDOMAIN") != -1) {//The hostname doesn't exist
-		System.p("SystemFault:Given Hostname(${host}) is not on the DNS server.");
-		return false;
+	if (res.search("find") != -1) {//can't find <hostname>:REFUSED, No answer, NXDOMAIN
+		if (res.search("REFUSED") != -1) {
+			System.p("SystemFault:Network is disconnected.");
+			return false;
+		} else {//The hostname doesn't exist
+			System.p("SystemFault:Given Hostname(${host}) is not on the DNS server.");
+			return false;
+		}
 	} else if (res.search("connection timed out") != -1) {//Default DNS server is not working
 		System.p("DNS server doesn't respond.");
 		String str = $(ip route show | grep "default");
@@ -47,7 +49,6 @@ boolean Nslookup(DCaseContext ctx) {
 			System.p("SystemFault:DNS server setting is wrong. Check /etc/resolv.conf");
 		}
 		return false;
-
 	} else {
 		System.p("Name Resolution Success.");
 		return true;

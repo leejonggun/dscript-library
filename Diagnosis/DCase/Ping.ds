@@ -24,7 +24,7 @@ boolean Ping(DCaseContext ctx) {
 	String mid_ret = $(minikonoha Ping_to_gateway.ds);
 	System.p(mid_ret);
 	if (mid_ret.search("true") == -1) {
-		System.p("SystemFault:Something on your firewall setting is wrong.");
+		System.p("SystemFault:Some settings of your firewall is wrong.");
 		return false;
 	}
 
@@ -38,17 +38,13 @@ boolean Ping(DCaseContext ctx) {
 		String res = $(ping "${host}" -c 2);
 		System.p(res);
 
-//		if (res.search("Request timed out") != -1)
-		if (res.search("100% packet loss") != -1) {//Host is found, but the host drops the packet.
-			lookup = $(minikonoha Nslookup.ds "${host}");
-			if (lookup.search("true") > 0) {
-				System.p("ExternalFault:Server doesn't respond. The server doesn't allow ping.");
+		if (res.search("Destination Host Unreachable") != -1) {//Network involving the host is found, but the host is not found.
+			String LAN = $(minikonoha IPCheck.ds "${host}");
+			if (LAN.search("true") > 0) {
+				System.p("${host} is in a LAN. But a computer with the IP is not found.");
 				return false;
 			}
-			System.p("SystemFault:Name Resolution is failed.");
-			return false;
-		} else if (res.search("Destination Host Unreachable") != -1) {//Network involves the host is found, but the host is not found.
-			System.p("ExternalFault:Host is not found.");
+			System.p("ExternalFault:${host} is out of LAN and not found.");
 			return false;
 		} else if (res.search("Destination Net Unreachable") != -1) {//Network is not found.
 			System.p("SystemFault:Dafault gateway setting is wrong.");
@@ -62,13 +58,22 @@ boolean Ping(DCaseContext ctx) {
 		} else if (res.search("Time to live exceeded") != -1) {//TTL is set too little
 			System.p("ExternalFault:It's too far to the server.");
 			return false;
+		} else if (res.search("100% packet loss") != -1) {//Host is found, but the host drops the packet.
+//		else if (res.search("Request timed out") != -1)
+//			lookup = $(minikonoha Nslookup.ds "${host}");
+//			if (lookup.search("false") != -1) {
+//				System.p("ExternalFault:Server doesn't respond. The server doesn't allow ping.");
+//				return false;
+//			}
+			String retry = $(minikonoha Retry.ds "${host}");
+			System.p("ExternalFault:Server doesn't respond. The server doesn't allow ping.");
+			return false;
 		}
 
 	} else if ($? == 2) {//Errors. can't ping
 		System.p(host);
 		lookup = $(minikonoha Nslookup.ds "${host}");
-		System.p(lookup);
-		if (lookup.search("true") > 0) {
+		if (lookup.search("false") == -1) {
 			System.p("SystemFault:Network is unreachable.");
 			return false;
 		}

@@ -13,7 +13,6 @@ boolean Ping_gateway(DCaseContext ctx) {
 //get router's IP Address
 	String str = $(ip route show | grep "default");
 	gateway = str.substring(str.search("192"), str.search("dev"));
-	System.p(gateway);
 
 //ping to the default gateway(router).
 	ping "${gateway}" -c 2 > /dev/null;

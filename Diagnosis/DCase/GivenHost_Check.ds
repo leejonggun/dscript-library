@@ -11,9 +11,9 @@ String host = "";
 boolean check_host_or_address(String[] given_host) {
 	int i = 0 , j = 0;
 	String tmpIP = given_host.get(0);
-	String[] check_list = {"www", "com", "co", "org", "jp"};
+	String[] check_list = {"www", "com", "co", "org"};
 
-	if (tmpIP.toint() == 0) {//if tmpIP is string, not number. String.toint() return 0.
+	if (tmpIP.toint() == 0) {//if tmpIP is string, not number. String.toint() returns 0.
 		while (i < given_host.getlength()) {
 			tmpIP = given_host.get(i);
 			while (j < check_list.getlength()) {
@@ -30,6 +30,8 @@ boolean check_host_or_address(String[] given_host) {
 		System.p("The given is not a HostName.");
 		return false;
 	}
+	System.p("Format is wrong. Not Hostname.");
+	return false;
 }
 
 boolean Given_HostName(DCaseContext ctx) {
