@@ -1,0 +1,41 @@
+// written by Joseph
+
+import("dshell");
+import("konoha.json");
+import("konoha.string");
+
+const DCaseContext = Json;
+
+String given_host = "";
+
+boolean Routing(DCaseContext ctx) {
+	boolean ret = true;
+	int i = 0, routable = 0;
+	given_host = ctx.getString("hostname3");
+	System.p(given_host);
+
+	String[] IP = $(gethostip "${given_host}" -d).trim().split(".");
+	System.p(IP);
+
+	given_host = given_host.slice(0, given_host.lastIndexOf("."));
+	String Rtable = $(netstat -rn | grep "${given_host}");
+
+	System.p(Rtable);
+	while (i < IP.getlength() - 1) {
+		routable = Rtable.search(IP.get(i));
+		System.p(routable);
+		i = i + 1;
+	}
+
+	return ret;
+}
+
+void main() {
+	DCaseContext ctx = new DCaseContext();
+	ctx.setString("hostname1", "192.168.122.179");
+	ctx.setString("hostname2", "www.google.com");
+	ctx.setString("hostname3", "192.168.100.121");
+	System.p(Routing(ctx));
+}
+
+main();

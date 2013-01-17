@@ -1,0 +1,18 @@
+// written by Joseph
+
+import("dshell");
+import("konoha.json");
+
+const DCaseContext = Json;
+
+boolean Retry(DCaseContext ctx) {
+	boolean ret = true;
+	return ret;
+}
+
+void main() {
+	DCaseContext ctx = new DCaseContext();
+	Retry(ctx);
+}
+
+main();

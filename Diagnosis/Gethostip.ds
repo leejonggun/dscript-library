@@ -12,7 +12,6 @@ boolean Gethostip(DCaseContext ctx) {
 	name = ctx.getString("hostname");
 	System.p(name);
 	String[] ret = $(gethostip "${name}").trim().split(" ");
-//	String[] ret = $(gethostip www.google.com).trim().split(" ");
 	String IP = ret.get(1);
 	System.p(IP);
 	return (IP != null);
