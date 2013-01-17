@@ -16,7 +16,7 @@ boolean Ping(DCaseContext ctx) {
 	String connection = $(minikonoha Connection.ds);
 	System.p(connection);
 	if (connection.search("true") == -1) {
-		System.p("Network is disconnected.Please plug the network cable.");
+		System.p("SystemFault:Network is disconnected.Please plug the network cable.");
 		return false;
 	}
 
@@ -34,14 +34,13 @@ boolean Ping(DCaseContext ctx) {
 		System.p("Success:Network path to the server is connected");
 		return true;
 
-	} else if ($? == 1) {//ping is unreachable
+	} else if ($? == 1) {//ping is unreachable. "Destination Host Unreachable", "Destination Net Unreachable", "Operation not permitted", "Time to live exceeded", "Request timed out"
 		String res = $(ping "${host}" -c 2);
-		System.p(res);
 
 		if (res.search("Destination Host Unreachable") != -1) {//Network involving the host is found, but the host is not found.
 			String LAN = $(minikonoha IPCheck.ds "${host}");
 			if (LAN.search("true") > 0) {
-				System.p("${host} is in a LAN. But a computer with the IP is not found.");
+				System.p("ExternalFault:${host} is in LAN and not found.");
 				return false;
 			}
 			System.p("ExternalFault:${host} is out of LAN and not found.");
@@ -60,25 +59,24 @@ boolean Ping(DCaseContext ctx) {
 			return false;
 		} else if (res.search("100% packet loss") != -1) {//Host is found, but the host drops the packet.
 //		else if (res.search("Request timed out") != -1)
-//			lookup = $(minikonoha Nslookup.ds "${host}");
-//			if (lookup.search("false") != -1) {
-//				System.p("ExternalFault:Server doesn't respond. The server doesn't allow ping.");
-//				return false;
-//			}
+			lookup = $(minikonoha Nslookup.ds "${host}");
+			if (lookup.search("false") != -1) {
+				System.p("ExternalFault:Server doesn't respond. The server doesn't allow ping.");
+				return false;
+			}
 			String retry = $(minikonoha Retry.ds "${host}");
 			System.p("ExternalFault:Server doesn't respond. The server doesn't allow ping.");
 			return false;
 		}
 
-	} else if ($? == 2) {//Errors. can't ping
+	} else if ($? == 2) {//Errors. can't ping. "Unknow host", "Network is unreachable"
 		System.p(host);
 		lookup = $(minikonoha Nslookup.ds "${host}");
-		if (lookup.search("false") == -1) {
+		if (lookup.search("false") == -1) {//"Unknown host"
 			System.p("SystemFault:Network is unreachable.");
 			return false;
 		}
-		System.p("nslookup failed");
-		System.p("SystemFault:Hostname is not found. The host is not on Nameserver");
+		System.p("SystemFault:nslookup faild. The host is not on Nameserver");
 		return false;
 	}
 	System.p("Ping.ds is not working");

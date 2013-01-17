@@ -14,7 +14,6 @@ boolean Ping_to_DNS(DCaseContext ctx) {
 
 //get nameserver ip address
 	resolv = $(cat "${resolv}" | grep "nameserver");
-	System.p(resolv);
 	nameserver = resolv.split(" ").get(1);
 
 //ping to the nameserver & check it works

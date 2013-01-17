@@ -7,7 +7,7 @@ const DCaseContext = Json;
 
 String IP = "";
 
-boolean host_unreachable(DCaseContext ctx) {
+boolean Host_unreachable(DCaseContext ctx) {
 	boolean ret = true;
 	IP = ctx.getString("givenIP");
 	String checkIP = $(minikonoha IPCheck.ds "${IP}");
@@ -18,7 +18,7 @@ boolean host_unreachable(DCaseContext ctx) {
 void main() {
 	DCaseContext ctx = new DCaseContext();
 	ctx.setString("givenIP", "192.168.1.1");
-	host_unreachable(ctx);
+	Host_unreachable(ctx);
 }
 
 main();

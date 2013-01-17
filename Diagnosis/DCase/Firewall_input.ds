@@ -17,6 +17,7 @@ boolean Firewall_input(DCaseContext ctx) {
 		System.p("INPUT packet is dropped.");
 		ret = false;
 	}
+
 	if (setting.search("echo-reply") > -1) {
 		System.p("icmp echo-reply is dropped or rejected. Your PC can't accept ping reply.");
 		ret = false;

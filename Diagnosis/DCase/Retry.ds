@@ -18,7 +18,7 @@ boolean Retry(DCaseContext ctx) {
 void main() {
 	DCaseContext ctx = new DCaseContext();
 	ctx.setString("hostname", SCRIPT_ARGV.get(1));
-	Retry(ctx);
+	System.p(Retry(ctx));
 }
 
 main();
