@@ -8,8 +8,8 @@ const DCaseContext = Json;
 boolean Connection(DCaseContext ctx) {
 	boolean ret = true;
 
-//check whether network cable is connected or not
-	int gateway = $(ip route show).search("default");
+//check whether network cable is connected or not = check whether NIC is recognized or not
+	int gateway = $(netstat -rn).search("eth");
 	if (gateway == -1) {
 		System.p("Network is disconnected.");
 		return false;

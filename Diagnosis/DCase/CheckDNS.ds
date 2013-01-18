@@ -5,7 +5,6 @@ import("konoha.json");
 
 const DCaseContext = Json;
 
-String nameserver = "";
 String resolv = "";
 
 boolean CheckDNS(DCaseContext ctx) {

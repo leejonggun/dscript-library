@@ -14,7 +14,7 @@ boolean Ping(DCaseContext ctx) {
 
 //check whether network cable is connected or not
 	String connection = $(minikonoha Connection.ds);
-	System.p(connection);
+//	System.p(connection);
 	if (connection.search("true") == -1) {
 		System.p("SystemFault:Network is disconnected.Please plug the network cable.");
 		return false;
@@ -22,18 +22,18 @@ boolean Ping(DCaseContext ctx) {
 
 //check whether default gateway(router) is set properly or not
 	String mid_ret = $(minikonoha Ping_to_gateway.ds);
-	System.p(mid_ret);
+//	System.p(mid_ret);
 	if (mid_ret.search("true") == -1) {
 		System.p("SystemFault:Some settings of your firewall is wrong.");
 		return false;
 	}
 
-//check whether the given hostname is Hostnaem or IP address
-	String IP_check = $(minikonoha IPCheck.ds "${host}");
-	System.p(IP_check);
-	if (IP_check.search("true") == -1) {
-		return false;
-	}
+//check whether the given hostname is Hostname or IP address
+//	String IP_check = $(minikonoha IPCheck.ds "${host}");
+//	System.p(IP_check);
+//	if (IP_check.search("true") == -1) {
+//		return false;
+//	}
 	ping "${host}" -c 2 > /dev/null;
 	System.p($?);
 	if ($? == 0) {//Success
