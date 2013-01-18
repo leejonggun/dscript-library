@@ -1,0 +1,51 @@
+// written by Joseph
+
+import("dshell");
+import("konoha.json");
+import("cstyle");
+
+const DCaseContext = Json;
+
+String host = "";
+
+boolean CheckGiven(String[] given_host) {
+	int i = 0 , j = 0;
+	String tmpIP = given_host.get(0);
+	String[] check_list = {"www", "com", "co", "org", "jp"};//If the given string has one of these words, it is intended as hostname
+
+	if (tmpIP.toint() == 0) {//if tmpIP is string String.toint() return 0.
+		while (i < given_host.getlength()) {
+			tmpIP = given_host.get(i);
+			j = 0;
+			while (j < check_list.getlength()) {
+				if (tmpIP == check_list.get(j)) {
+					return true;
+				}
+				j = j + 1;
+			}
+			i = i + 1;
+		}
+		System.p("The given host has wrong format.");
+		return false;
+	} else {
+		return false;
+	}
+}
+
+boolean CheckHostOrIP(DCaseContext ctx) {
+	boolean ret = true;
+	host = ctx.getString("hostname");
+
+//check the given is IP Address or Hostname.
+	String[] given = host.split(".");
+	ret = CheckGiven(given);
+	return ret;
+}
+
+void main() {
+	DCaseContext ctx = new DCaseContext();
+	ctx.setString("hostname", SCRIPT_ARGV.get(1));
+	System.p(CheckHostOrIP(ctx));
+}
+
+main();

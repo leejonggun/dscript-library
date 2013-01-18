@@ -1,0 +1,60 @@
+// written by Joseph
+
+import("dshell");
+import("konoha.json");
+
+const DCaseContext = Json;
+
+String host = "";
+
+boolean Evidences(DCaseContext ctx) {
+	boolean ret = true;
+	host = ctx.getString("hostname");
+	String result = $(minikonoha Connection.ds);
+	System.p(result);
+
+	result = $(minikonoha FirewallOutput.ds);
+	System.p(result);
+
+	result = $(minikonoha FirewallInput.ds);
+	System.p(result);
+
+	result = $(minikonoha CheckDNS.ds);
+	System.p(result);
+
+	result = $(minikonoha PingDNS.ds);
+	System.p(result);
+
+	result = $(minikonoha CheckHostOrIP.ds "${host}");
+	System.p(result);
+
+	if (result.search("true") > 0) {
+		result = $(minikonoha Nslookup.ds "${host}");
+		System.p(result);
+	}
+
+	result = $(minikonoha RoutingDirectly.ds);
+	System.p(result);
+
+	result = $(minikonoha RoutingDefault.ds);
+	System.p(result);
+
+	result = $(minikonoha RecognitionGateway.ds);
+	System.p(result);
+
+	if (result.search("true") > 0) {
+		result = $(minikonoha PingGateway.ds);
+		System.p(result);
+	}
+
+	return ret;
+}
+
+void main() {
+	DCaseContext ctx = new DCaseContext();
+	ctx.setString("hostname", "192.168.122.179");
+//	ctx.setString("hostname", "www.google.com");
+	Evidences(ctx);
+}
+
+main();

@@ -5,12 +5,12 @@ import("konoha.json");
 
 const DCaseContext = Json;
 
-boolean Routing(DCaseContext ctx) {
+boolean RoutingDefault(DCaseContext ctx) {
 	boolean ret = true;
 
 	String Rtable = $(netstat -rn | grep "UG");
 	if (Rtable.search("UG") > 0) {
-		System.p("Success:The gateway is resistered. Check the gateway's routing settings.");
+		System.p("Success:The gateway is registered. Check its routing settings.");
 		ret = true;
 	}
 
@@ -19,7 +19,7 @@ boolean Routing(DCaseContext ctx) {
 
 void main() {
 	DCaseContext ctx = new DCaseContext();
-	System.p(Routing(ctx));
+	System.p(RoutingDefault(ctx));
 }
 
 main();

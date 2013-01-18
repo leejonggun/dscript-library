@@ -11,7 +11,7 @@ boolean Connection(DCaseContext ctx) {
 //check whether network cable is connected or not = check whether NIC is recognized or not
 	int gateway = $(netstat -rn).search("eth");
 	if (gateway == -1) {
-		System.p("Network is disconnected.");
+		System.p("SystemFault:Network is disconnected.");
 		return false;
 	};
 	return ret;

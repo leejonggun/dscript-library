@@ -5,13 +5,13 @@ import("konoha.json");
 
 const DCaseContext = Json;
 
-boolean Connection(DCaseContext ctx) {
+boolean RecognitionGateway(DCaseContext ctx) {
 	boolean ret = true;
 
 //check whether default gateway is recognized or not
 	int gateway = $(netstat -r).search("UG");
 	if (gateway == -1) {
-		System.p("Network is disconnected.");
+		System.p("SystemFault:Network is disconnected.");
 		return false;
 	};
 	return ret;
@@ -19,7 +19,7 @@ boolean Connection(DCaseContext ctx) {
 
 void main() {
 	DCaseContext ctx = new DCaseContext();
-	System.p(Connection(ctx));
+	System.p(RecognitionGateway(ctx));
 }
 
 main();

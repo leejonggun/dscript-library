@@ -7,11 +7,10 @@ const DCaseContext = Json;
 
 String given_host = "";
 
-boolean Routing(DCaseContext ctx) {
+boolean RoutingDirectly(DCaseContext ctx) {
 	boolean ret = true;
 	int i = 0, routable = 0;
 	given_host = ctx.getString("hostname1");
-	System.p(given_host);
 
 	String[] IP = $(gethostip "${given_host}" -d).trim().split(".");//can connect directly.
 
@@ -23,7 +22,6 @@ boolean Routing(DCaseContext ctx) {
 		i = i + 1;
 	}
 	if (routable > 0) {
-		System.p("Success:Given IP can be routed.");
 		ret = true;
 	} else {
 		System.p("SystemFalt:Given IP cannot be routed, should be added.");
@@ -38,7 +36,7 @@ void main() {
 	ctx.setString("hostname2", "www.google.com");
 	ctx.setString("hostname3", "192.168.100.121");
 	ctx.setString("hostname4", "192.168.59.159");
-	System.p(Routing(ctx));
+	System.p(RoutingDirectly(ctx));
 }
 
 main();

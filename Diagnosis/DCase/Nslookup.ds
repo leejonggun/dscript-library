@@ -48,7 +48,6 @@ boolean Nslookup(DCaseContext ctx) {
 		}
 		return false;
 	} else {
-		System.p("Success:Name Resolution.");
 		return true;
 	}
 }

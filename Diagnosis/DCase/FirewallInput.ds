@@ -5,7 +5,7 @@ import("konoha.json");
 
 const DCaseContext = Json;
 
-boolean Firewall_output(DCaseContext ctx) {
+boolean FirewallInput(DCaseContext ctx) {
 	boolean ret = true;
 
 //get iptables setting
@@ -13,13 +13,13 @@ boolean Firewall_output(DCaseContext ctx) {
 	setting = setting.concat($(sudo iptables -L | grep "REJECT"));
 	System.p(setting);
 
-	if (setting.search("OUTPUT") > -1) {
-		System.p("OUTPUT packet is dropped");
+	if (setting.search("INPUT") > -1) {
+		System.p("INPUT packet is dropped.");
 		ret = false;
 	}
 
-	if (setting.search("echo-request") > -1) {
-		System.p("icmp echo-request is dropped or rejected. Your PC can't ping.");
+	if (setting.search("echo-reply") > -1) {
+		System.p("icmp echo-reply is dropped or rejected. Your PC can't accept ping reply.");
 		ret = false;
 	}
 	return ret;
@@ -27,7 +27,7 @@ boolean Firewall_output(DCaseContext ctx) {
 
 void main() {
 	DCaseContext ctx = new DCaseContext();
-	System.p(Firewall_output(ctx));
+	System.p(FirewallInput(ctx));
 }
 
 main();

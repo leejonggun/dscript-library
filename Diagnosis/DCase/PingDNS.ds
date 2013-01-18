@@ -8,7 +8,7 @@ const DCaseContext = Json;
 String nameserver = "";
 String resolv = "";
 
-boolean Ping_to_DNS(DCaseContext ctx) {
+boolean PingDNS(DCaseContext ctx) {
 	boolean ret = true;
 	resolv = ctx.getString("resolv");
 
@@ -25,7 +25,7 @@ boolean Ping_to_DNS(DCaseContext ctx) {
 void main() {
 	DCaseContext ctx = new DCaseContext();
 	ctx.setString("resolv", "/etc/resolv.conf");
-	System.p(Ping_to_DNS(ctx));
+	System.p(PingDNS(ctx));
 }
 
 main();
