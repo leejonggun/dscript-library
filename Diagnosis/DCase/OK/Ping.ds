@@ -20,7 +20,7 @@ boolean Ping(DCaseContext ctx) {
 		return false;
 	}
 
-//check whether default gateway(router) is set properly or not.
+//check whether default gateway(router) is set properly or not
 	String mid_ret = $(minikonoha Ping_to_gateway.ds);
 	System.p(mid_ret);
 	if (mid_ret.search("true") == -1) {
@@ -28,6 +28,12 @@ boolean Ping(DCaseContext ctx) {
 		return false;
 	}
 
+//check whether the given hostname is Hostnaem or IP address
+	String IP_check = $(minikonoha IPCheck.ds "${host}");
+	System.p(IP_check);
+	if (IP_check.search("true") == -1) {
+		return false;
+	}
 	ping "${host}" -c 2 > /dev/null;
 	System.p($?);
 	if ($? == 0) {//Success
@@ -47,8 +53,8 @@ boolean Ping(DCaseContext ctx) {
 			return false;
 		} else if (res.search("Destination Net Unreachable") != -1) {//Network is not found.
 			System.p("SystemFault:Dafault gateway setting is wrong.");
-			String default_gateway = $(ip route show | grep "default");
-			System.p(default_gateway + ". This gateway is not working.");
+			String default_gateway = $(ip route show | grep "UG");
+			System.p("SystemFault:" + default_gateway + ". This gateway is not working.");
 			return false;
 		} else if (res.search("Operation not permitted") != -1) {//firewall doesn't allow ping.
 			sudo iptables -L | grep "DROP";

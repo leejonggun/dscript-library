@@ -11,7 +11,7 @@ boolean Connection(DCaseContext ctx) {
 //check whether network cable is connected or not
 	int gateway = $(ip route show).search("default");
 	if (gateway == -1) {
-		System.p("Network is disconnected. Your PC doesn't connect to a router. Please plug the network cable.");
+		System.p("Network is disconnected.");
 		return false;
 	};
 	return ret;

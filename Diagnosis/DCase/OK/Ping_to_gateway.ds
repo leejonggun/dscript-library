@@ -7,7 +7,7 @@ const DCaseContext = Json;
 
 String gateway = "";
 
-boolean Ping_gateway(DCaseContext ctx) {
+boolean Ping_to_gateway(DCaseContext ctx) {
 	boolean ret = true;
 
 //get router's IP Address
@@ -47,7 +47,7 @@ boolean Ping_gateway(DCaseContext ctx) {
 
 void main() {
 	DCaseContext ctx = new DCaseContext();
-	System.p(Ping_gateway(ctx));
+	System.p(Ping_to_gateway(ctx));
 }
 
 main();

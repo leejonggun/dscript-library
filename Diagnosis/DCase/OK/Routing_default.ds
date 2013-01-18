@@ -1,0 +1,25 @@
+// written by Joseph
+
+import("dshell");
+import("konoha.json");
+
+const DCaseContext = Json;
+
+boolean Routing(DCaseContext ctx) {
+	boolean ret = true;
+
+	String Rtable = $(netstat -rn | grep "UG");
+	if (Rtable.search("UG") > 0) {
+		System.p("Success:The gateway is resistered. Check the gateway's routing settings.");
+		ret = true;
+	}
+
+	return ret;
+}
+
+void main() {
+	DCaseContext ctx = new DCaseContext();
+	System.p(Routing(ctx));
+}
+
+main();

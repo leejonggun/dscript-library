@@ -25,11 +25,11 @@ boolean Nslookup(DCaseContext ctx) {
 	}
 
 //First try nslookup
-	String res = $(nslookup "${host}" -timeout=1);
+	String res = $(nslookup "${host}");
 
 	if (res.search("find") != -1) {//can't find <hostname>:REFUSED, No answer, or NXDOMAIN
 		if (res.search("REFUSED") != -1) {
-			System.p("SystemFault:Network is disconnected.");
+			System.p($(minikonoha Connection.ds));
 			return false;
 		} else {//The hostname doesn't exist
 			System.p("SystemFault:Given Hostname(${host}) is not on the DNS server.");
