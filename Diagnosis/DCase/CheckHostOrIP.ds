@@ -19,6 +19,7 @@ boolean CheckGiven(String[] given_host) {
 			j = 0;
 			while (j < check_list.getlength()) {
 				if (tmpIP == check_list.get(j)) {
+					System.p("Hostname");
 					return true;
 				}
 				j = j + 1;
@@ -28,6 +29,7 @@ boolean CheckGiven(String[] given_host) {
 		System.p("The given host has wrong format.");
 		return false;
 	} else {
+		System.p("IP Address");
 		return false;
 	}
 }
@@ -45,7 +47,7 @@ boolean CheckHostOrIP(DCaseContext ctx) {
 void main() {
 	DCaseContext ctx = new DCaseContext();
 	ctx.setString("hostname", SCRIPT_ARGV.get(1));
-	System.p(CheckHostOrIP(ctx));
+	CheckHostOrIP(ctx);
 }
 
 main();

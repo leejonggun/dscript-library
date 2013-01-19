@@ -14,6 +14,10 @@ boolean PingDNS(DCaseContext ctx) {
 
 //get nameserver ip address
 	resolv = $(cat "${resolv}" | grep "nameserver");
+	if (resolv.search("nameserver") == -1) {
+		System.p("SystemFault:DNS is not found. Check /etc/resolv.conf.");
+		return false;
+	}
 	nameserver = resolv.split(" ").get(1);
 
 //ping to the nameserver & check it works

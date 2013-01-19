@@ -11,15 +11,14 @@ boolean FirewallInput(DCaseContext ctx) {
 //get iptables setting
 	String setting = $(sudo iptables -L | grep "DROP");
 	setting = setting.concat($(sudo iptables -L | grep "REJECT"));
-	System.p(setting);
 
 	if (setting.search("INPUT") > -1) {
-		System.p("INPUT packet is dropped.");
+		System.p("SystemFault:INPUT packet is dropped.");
 		ret = false;
 	}
 
 	if (setting.search("echo-reply") > -1) {
-		System.p("icmp echo-reply is dropped or rejected. Your PC can't accept ping reply.");
+		System.p("SystemFault:ICMP echo-reply is dropped or rejected. ");
 		ret = false;
 	}
 	return ret;

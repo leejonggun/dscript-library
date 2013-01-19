@@ -13,30 +13,29 @@ boolean Nslookup(DCaseContext ctx) {
 	host = ctx.getString("hostname");
 
 //check DNS is recognised.
-	String check = $(minikonoha CheckDNS.ds);
-	if (check.search("false") > -1) {
-		return false;
-	}
+//	String check = $(minikonoha CheckDNS.ds);
+//	if (check.search("false") > -1) {
+//		return false;
+//	}
 
 //check whether DNS respond or not
-	check = $(minikonoha Ping_to_DNS.ds);
-	if (check.search("false") > -1) {
-		return false;
-	}
+//	check = $(minikonoha PingDNS.ds);
+//	if (check.search("false") > -1) {
+//		return false;
+//	}
 
 //First try nslookup
 	String res = $(nslookup "${host}");
 
 	if (res.search("find") != -1) {//can't find <hostname>:REFUSED, No answer, or NXDOMAIN
 		if (res.search("REFUSED") != -1) {
-			System.p($(minikonoha Connection.ds));
 			return false;
 		} else {//The hostname doesn't exist
 			System.p("SystemFault:Given Hostname(${host}) is not on the DNS server.");
 			return false;
 		}
 	} else if (res.search("connection timed out") != -1) {//Default DNS server is not working
-		System.p("DNS server doesn't respond.");
+		System.p("SystemFault:DNS server doesn't respond.");
 		String str = $(ip route show | grep "default");
 		DNS = str.substring(str.search("192"), str.search("dev"));
 //Second try nslookup

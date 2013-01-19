@@ -12,28 +12,6 @@ boolean Ping(DCaseContext ctx) {
 	host = ctx.getString("hostname");
 	String lookup = "";
 
-//check whether network cable is connected or not
-	String connection = $(minikonoha Connection.ds);
-//	System.p(connection);
-	if (connection.search("true") == -1) {
-		System.p("SystemFault:Network is disconnected.Please plug the network cable.");
-		return false;
-	}
-
-//check whether default gateway(router) is set properly or not
-	String mid_ret = $(minikonoha Ping_to_gateway.ds);
-//	System.p(mid_ret);
-	if (mid_ret.search("true") == -1) {
-		System.p("SystemFault:Some settings of your firewall is wrong.");
-		return false;
-	}
-
-//check whether the given hostname is Hostname or IP address
-//	String IP_check = $(minikonoha IPCheck.ds "${host}");
-//	System.p(IP_check);
-//	if (IP_check.search("true") == -1) {
-//		return false;
-//	}
 	ping "${host}" -c 2 > /dev/null;
 	System.p($?);
 	if ($? == 0) {//Success
@@ -45,7 +23,7 @@ boolean Ping(DCaseContext ctx) {
 
 		if (res.search("Destination Host Unreachable") != -1) {//Network involving the host is found, but the host is not found.
 			String LAN = $(minikonoha IPCheck.ds "${host}");
-			if (LAN.search("true") > 0) {
+			if (LAN.search("inside") > 0) {
 				System.p("ExternalFault:${host} is in LAN and not found.");
 				return false;
 			}
@@ -71,18 +49,18 @@ boolean Ping(DCaseContext ctx) {
 				return false;
 			}
 			String retry = $(minikonoha Retry.ds "${host}");
+			System.p("SystemFault:Check your firewall setting");
 			System.p("ExternalFault:Server doesn't respond. The server doesn't allow ping.");
 			return false;
 		}
 
 	} else if ($? == 2) {//Errors. can't ping. "Unknow host", "Network is unreachable"
-		System.p(host);
 		lookup = $(minikonoha Nslookup.ds "${host}");
 		if (lookup.search("false") == -1) {//"Unknown host"
 			System.p("SystemFault:Network is unreachable.");
 			return false;
 		}
-		System.p("SystemFault:nslookup faild. The host is not on Nameserver");
+		System.p("SystemFault:name resolution faild.");
 		return false;
 	}
 	System.p("Ping.ds is not working");

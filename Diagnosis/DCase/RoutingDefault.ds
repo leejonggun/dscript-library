@@ -6,7 +6,7 @@ import("konoha.json");
 const DCaseContext = Json;
 
 boolean RoutingDefault(DCaseContext ctx) {
-	boolean ret = true;
+	boolean ret = false;
 
 	String Rtable = $(netstat -rn | grep "UG");
 	if (Rtable.search("UG") > 0) {
