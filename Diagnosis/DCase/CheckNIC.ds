@@ -1,0 +1,27 @@
+// written by Joseph
+
+import("dshell");
+import("konoha.json");
+
+const DCaseContext = Json;
+
+boolean CheckNIC(DCaseContext ctx) {
+	boolean ret = true;
+
+//check whether network cable is connected or not = check whether NIC is recognized or not
+	String NIC = $(lspci -nn | grep "Network");
+	NIC = NIC.concat($(lspci -nn | grep "Ethernet"));
+	int Recog_NIC = NIC.search("controller");
+	if (Recog_NIC == -1) {
+		System.p("SystemFault:NIC is not recognised.");
+		return false;
+	};
+	return ret;
+}
+
+void main() {
+	DCaseContext ctx = new DCaseContext();
+	System.p(CheckNIC(ctx));
+}
+
+main();

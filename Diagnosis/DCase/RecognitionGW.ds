@@ -5,7 +5,7 @@ import("konoha.json");
 
 const DCaseContext = Json;
 
-boolean RecognitionGateway(DCaseContext ctx) {
+boolean RecognitionGW(DCaseContext ctx) {
 	boolean ret = true;
 
 //check whether default gateway is recognized or not
@@ -19,7 +19,7 @@ boolean RecognitionGateway(DCaseContext ctx) {
 
 void main() {
 	DCaseContext ctx = new DCaseContext();
-	System.p(RecognitionGateway(ctx));
+	System.p(RecognitionGW(ctx));
 }
 
 main();

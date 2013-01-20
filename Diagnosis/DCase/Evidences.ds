@@ -56,19 +56,19 @@ boolean Evidences(DCaseContext ctx) {
 	result = $(minikonoha RoutingDefault.ds);
 	System.p(result);
 
-	result = $(minikonoha RecognitionGateway.ds);
+	result = $(minikonoha RecognitionGW.ds);
 	System.p(result);
 
 	if (result.search("true") > 0) {
-//		result = $(minikonoha PingGateway.ds);
+//		result = $(minikonoha PingGW.ds);
 //		System.p(result);
 		String str = $(ip route show | grep "default");
 		gateway = str.substring(str.search("192"), str.search("dev"));
 		ping "${gateway}" -c 2 > /dev/null;
 		if ($? == 0) {
-			result = "(PingGateway.ds)true";
+			result = "(PingGW.ds)true";
 		} else {
-			result = "(PingGateway.ds)false";
+			result = "(PingGW.ds)false";
 		}
 		System.p(result);
 	}
