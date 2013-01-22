@@ -1,0 +1,32 @@
+// written by Joseph
+
+import("dshell");
+import("konoha.json");
+
+const DCaseContext = Json;
+
+boolean FirewallInput(DCaseContext ctx) {
+	boolean ret = true;
+
+//get iptables setting
+	String setting = $(sudo iptables -L | grep "DROP");
+	setting = setting.concat($(sudo iptables -L | grep "REJECT"));
+
+	if (setting.search("INPUT") > -1) {
+		System.p("SystemFault:INPUT packet is dropped.");
+		ret = false;
+	}
+
+	if (setting.search("echo-reply") > -1) {
+		System.p("SystemFault:ICMP echo-reply is dropped or rejected. ");
+		ret = false;
+	}
+	return ret;
+}
+
+void main() {
+	DCaseContext ctx = new DCaseContext();
+	System.p(FirewallInput(ctx));
+}
+
+main();

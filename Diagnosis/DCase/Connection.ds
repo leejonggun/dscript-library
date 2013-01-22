@@ -9,8 +9,10 @@ boolean Connection(DCaseContext ctx) {
 	boolean ret = true;
 
 //check whether network cable is connected or not = network interface is working or not
-	int gateway = $(netstat -rn).search("eth");
-	if (gateway == -1) {
+	String netstatus = $(netstat -rn);
+	int iface = netstatus.search("eth");
+	iface = iface + netstatus.search("wlan");
+	if (iface < 0) {
 		System.p("SystemFault:Iface is not working.");
 		return false;
 	};

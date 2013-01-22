@@ -1,0 +1,19 @@
+// written by Joseph
+
+import("dshell");
+import("konoha.json");
+
+const DCaseContext = Json;
+
+boolean CheckIPAddress(DCaseContext ctx) {
+	String ifconfig = $(ifconfig);
+	boolean ret = (ifconfig.search("addr") > -1);
+	return ret;
+}
+
+void main() {
+	DCaseContext ctx = new DCaseContext();
+	System.p(CheckIPAddress(ctx));
+}
+
+main();

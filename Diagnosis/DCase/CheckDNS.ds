@@ -12,11 +12,11 @@ boolean CheckDNS(DCaseContext ctx) {
 	resolv = ctx.getString("resolv");
 
 //get nameserver ip address
-	String hoge = $(cat "${resolv}" | grep "nameserver"));
+	String DNS = $(cat "${resolv}" | grep "nameserver"));
 
 //"grep" doesn't get any string, then return status will be 0
 //	ret = ($? == 0);
-	ret = (hoge.search("nameserver") > -1);
+	ret = (DNS.search("nameserver") > -1);
 	return ret;
 }
 

@@ -33,9 +33,6 @@ boolean RoutingDirectly(DCaseContext ctx) {
 void main() {
 	DCaseContext ctx = new DCaseContext();
 	ctx.setString("hostname1", "192.168.122.179");
-	ctx.setString("hostname2", "www.google.com");
-	ctx.setString("hostname3", "192.168.100.121");
-	ctx.setString("hostname4", "192.168.59.159");
 	System.p(RoutingDirectly(ctx));
 }
 
