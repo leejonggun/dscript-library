@@ -2,12 +2,9 @@
 
 import("Syntax.ShellStyle");
 import("Type.Json");
-import("cstyle");
-
-String host = "";
 
 boolean Ping(Json ctx) {
-	host = ctx.getString("hostname");
+	String host = ctx.getString("hostname");
 	String lookup = "";
 
 	ping "${host}" -c 2 > /dev/null;

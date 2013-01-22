@@ -3,33 +3,29 @@
 import("Syntax.ShellStyle");
 import("Type.Json");
 
-String ifconfig = "";
-
-boolean FirewallInput(Json ctx) {
+boolean FirewallIPInput(Json ctx) {
 	boolean ret = true;
 
 //get iptables setting
 	String setting = $(sudo iptables -L);
 	setting = setting.substring(setting.search("INPUT"), setting.search("FORWARD"));
-	ifconfig = $(echo "${setting}" | grep "DROP");
+	String ifconfig = $(echo "${setting}" | grep "DROP");
 	ifconfig.concat($(echo "${setting}" | grep "REJECT"));
-	System.p(ifconfig);
 
-//	if (setting.substring(0, setting.search("\n")).search("DROP") > -1) {
-//		System.p("SystemFault:INPUT packet is dropped.");
-//		ret = false;
-//	}
+	if (ifconfig.search("DROP") > -1) {
+		System.p("SystemFault:INPUT packet is dropped.");
+		ret = false;
+	} else if (ifconfig.search("REJECT") > -1) {
+		System.p("SystemFault:INPUT packet is rejected.");
+		ret = false;
+	}
 
-//	if (setting.search("echo-reply") > -1) {
-//		System.p("SystemFault:ICMP echo-reply is dropped or rejected. ");
-//		ret = false;
-//	}
 	return ret;
 }
 
 void main() {
 	Json ctx = new Json();
-	System.p(FirewallInput(ctx));
+	System.p(FirewallIPInput(ctx));
 }
 
 main();

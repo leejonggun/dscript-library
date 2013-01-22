@@ -3,29 +3,29 @@
 import("Syntax.ShellStyle");
 import("Type.Json");
 
-boolean FirewallInput(Json ctx) {
+boolean FirewallIPForward(Json ctx) {
 	boolean ret = true;
 
 //get iptables setting
 	String setting = $(sudo iptables -L);
 	setting = setting.substring(setting.search("FORWARD"), setting.search("OUTPUT"));
-	System.p(setting);
+	String ifconfig = $(echo "${setting}" | grep "DROP");
+	ifconfig.concat($(echo "${setting}" | grep "REJECT"));
 
-//	if (setting.search("FORWARD") > -1) {
-//		System.p("SystemFault:FORWARD packet is dropped.");
-//		ret = false;
-//	}
-//
-//	if (setting.search("echo-reply") > -1) {
-//		System.p("SystemFault:ICMP echo-reply is dropped or rejected. ");
-//		ret = false;
+	if (ifconfig.search("DROP") > -1) {
+		System.p("SystemFault:FORWARD packet is dropped.");
+		ret = false;
+	} else if (ifconfig.search("REJECT") > -1) {
+		System.p("SystemFault:FORWARD packet is rejected.");
+		ret = false;
 	}
+
 	return ret;
 }
 
 void main() {
 	Json ctx = new Json();
-	System.p(FirewallInput(ctx));
+	System.p(FirewallIPForward(ctx));
 }
 
 main();

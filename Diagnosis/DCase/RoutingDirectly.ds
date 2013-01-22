@@ -3,12 +3,10 @@
 import("Syntax.ShellStyle");
 import("Type.Json");
 
-String given_host = "";
-
 boolean RoutingDirectly(Json ctx) {
 	boolean ret = true;
 	int i = 0, routable = 0;
-	given_host = ctx.getString("hostname1");
+	String given_host = ctx.getString("hostname1");
 
 	String[] IP = $(gethostip "${given_host}" -d).trim().split(".");//can connect directly.
 

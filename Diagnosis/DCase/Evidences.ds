@@ -3,13 +3,9 @@
 import("Syntax.ShellStyle");
 import("Type.Json");
 
-String host = "";
-String nameserver = "";
-String gateway = "";
-
 boolean Evidences(Json ctx) {
 	boolean ret = true;
-	host = ctx.getString("hostname");
+	String host = ctx.getString("hostname");
 	String result = $(minikonoha Connection.ds);
 	System.p(result);
 
@@ -29,7 +25,7 @@ boolean Evidences(Json ctx) {
 		if (resolv.search("nameserver") == -1) {
 			result = "(PingDNS.ds)false";
 		} else {
-			nameserver = resolv.split(" ").get(1);
+			String nameserver = resolv.split(" ").get(1);
 			ping "${nameserver}" -c 2 > /dev/null;
 			if ($? == 0) {
 				result = "(PingDNS.ds)true";
@@ -61,7 +57,7 @@ boolean Evidences(Json ctx) {
 //		result = $(minikonoha PingGW.ds);
 //		System.p(result);
 		String str = $(ip route show | grep "default");
-		gateway = str.substring(str.search("192"), str.search("dev"));
+		String gateway = str.substring(str.search("192"), str.search("dev"));
 		ping "${gateway}" -c 2 > /dev/null;
 		if ($? == 0) {
 			result = "(PingGW.ds)true";

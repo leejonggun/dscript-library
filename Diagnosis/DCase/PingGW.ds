@@ -3,14 +3,12 @@
 import("Syntax.ShellStyle");
 import("Type.Json");
 
-String gateway = "";
-
 boolean PingGW(Json ctx) {
 	boolean ret = true;
 
 //get router's IP Address
 	String str = $(ip route show | grep "default");
-	gateway = str.substring(str.search("192"), str.search("dev"));
+	String gateway = str.substring(str.search("192"), str.search("dev"));
 
 //ping to the default gateway(router).
 	ping "${gateway}" -c 2 > /dev/null;

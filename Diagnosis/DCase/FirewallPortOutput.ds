@@ -3,7 +3,7 @@
 import("Syntax.ShellStyle");
 import("Type.Json");
 
-boolean FirewallOutput(Json ctx) {
+boolean FirewallPortOutput(Json ctx) {
 	boolean ret = true;
 
 //get iptables setting
@@ -24,7 +24,7 @@ boolean FirewallOutput(Json ctx) {
 
 void main() {
 	Json ctx = new Json();
-	System.p(FirewallOutput(ctx));
+	System.p(FirewallPortOutput(ctx));
 }
 
 main();

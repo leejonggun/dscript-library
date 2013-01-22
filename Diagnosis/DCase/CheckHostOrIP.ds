@@ -4,8 +4,6 @@ import("Syntax.ShellStyle");
 import("Type.Json");
 import("cstyle");
 
-String host = "";
-
 boolean CheckGiven(String[] given_host) {
 	int i = 0 , j = 0;
 	String tmpIP = given_host.get(0);
@@ -34,7 +32,7 @@ boolean CheckGiven(String[] given_host) {
 
 boolean CheckHostOrIP(Json ctx) {
 	boolean ret = true;
-	host = ctx.getString("hostname");
+	String host = ctx.getString("hostname");
 
 //check the given is IP Address or Hostname.
 	String[] given = host.split(".");

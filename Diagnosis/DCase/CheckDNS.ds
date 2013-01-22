@@ -1,18 +1,14 @@
 // written by Joseph
 
-import("Syntax.GlobalVariable");
 import("Syntax.ShellStyle");
 import("Type.Json");
 
-String resolv = "";
-
 boolean CheckDNS(Json ctx) {
 	boolean ret = true;
-	System.p(resolv);
-	resolv = ctx.getString("resolvpath");
+	String resolv = ctx.getString("resolvpath");
 
 //get nameserver ip address
-	String DNS = $(cat "${resolv}" | grep "nameserver"));
+	String DNS = $(cat "${resolv}" | grep "nameserver");
 
 //"grep" doesn't get any string, then return status will be 0
 //	ret = ($? == 0);
