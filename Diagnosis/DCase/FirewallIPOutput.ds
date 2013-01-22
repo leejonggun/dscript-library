@@ -1,11 +1,9 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
+import("Syntax.ShellStyle");
+import("Type.Json");
 
-const DCaseContext = Json;
-
-boolean FirewallOutput(DCaseContext ctx) {
+boolean FirewallOutput(Json ctx) {
 	boolean ret = true;
 
 //get iptables setting
@@ -25,7 +23,7 @@ boolean FirewallOutput(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
+	Json ctx = new Json();
 	System.p(FirewallOutput(ctx));
 }
 

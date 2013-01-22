@@ -1,11 +1,9 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
+import("Syntax.ShellStyle");
+import("Type.Json");
 
-const DCaseContext = Json;
-
-boolean RoutingDefault(DCaseContext ctx) {
+boolean RoutingDefault(Json ctx) {
 	boolean ret = false;
 
 	String Rtable = $(netstat -rn | grep "UG");
@@ -18,7 +16,7 @@ boolean RoutingDefault(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
+	Json ctx = new Json();
 	System.p(RoutingDefault(ctx));
 }
 

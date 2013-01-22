@@ -1,15 +1,15 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
-
-const DCaseContext = Json;
+import("Syntax.GlobalVariable");
+import("Syntax.ShellStyle");
+import("Type.Json");
 
 String resolv = "";
 
-boolean CheckDNS(DCaseContext ctx) {
+boolean CheckDNS(Json ctx) {
 	boolean ret = true;
-	resolv = ctx.getString("resolv");
+	System.p(resolv);
+	resolv = ctx.getString("resolvpath");
 
 //get nameserver ip address
 	String DNS = $(cat "${resolv}" | grep "nameserver"));
@@ -21,8 +21,8 @@ boolean CheckDNS(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
-	ctx.setString("resolv", "/etc/resolv.conf");
+	Json ctx = new Json();
+	ctx.setString("resolvpath", "/etc/resolv.conf");
 	System.p(CheckDNS(ctx));
 }
 

@@ -1,15 +1,13 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
-
-const DCaseContext = Json;
+import("Syntax.ShellStyle");
+import("Type.Json");
 
 String host = "";
 String nameserver = "";
 String gateway = "";
 
-boolean Evidences(DCaseContext ctx) {
+boolean Evidences(Json ctx) {
 	boolean ret = true;
 	host = ctx.getString("hostname");
 	String result = $(minikonoha Connection.ds);
@@ -129,7 +127,7 @@ boolean Evidences(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
+	Json ctx = new Json();
 //	ctx.setString("hostname", "www.google.com");
 //	ctx.setString("hostname", "192.168.122.179");
 	ctx.setString("hostname", SCRIPT_ARGV.get(1));

@@ -1,11 +1,9 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
+import("Syntax.ShellStyle");
+import("Type.Json");
 
-const DCaseContext = Json;
-
-boolean RecognitionGW(DCaseContext ctx) {
+boolean RecognitionGW(Json ctx) {
 	boolean ret = true;
 
 //check whether default gateway is recognized or not
@@ -18,7 +16,7 @@ boolean RecognitionGW(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
+	Json ctx = new Json();
 	System.p(RecognitionGW(ctx));
 }
 

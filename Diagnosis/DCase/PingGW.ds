@@ -1,13 +1,11 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
-
-const DCaseContext = Json;
+import("Syntax.ShellStyle");
+import("Type.Json");
 
 String gateway = "";
 
-boolean PingGW(DCaseContext ctx) {
+boolean PingGW(Json ctx) {
 	boolean ret = true;
 
 //get router's IP Address
@@ -24,7 +22,7 @@ boolean PingGW(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
+	Json ctx = new Json();
 	System.p(PingGW(ctx));
 }
 

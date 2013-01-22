@@ -1,11 +1,9 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
+import("Syntax.ShellStyle");
+import("Type.Json");
 
-const DCaseContext = Json;
-
-boolean CheckNIC(DCaseContext ctx) {
+boolean CheckNIC(Json ctx) {
 	boolean ret = true;
 
 //check whether network cable is connected or not = check whether NIC is recognized or not
@@ -20,7 +18,7 @@ boolean CheckNIC(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
+	Json ctx = new Json();
 	System.p(CheckNIC(ctx));
 }
 

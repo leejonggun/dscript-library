@@ -1,11 +1,9 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
+import("Syntax.ShellStyle");
+import("Type.Json");
 
-const DCaseContext = Json;
-
-boolean Connection(DCaseContext ctx) {
+boolean Connection(Json ctx) {
 	boolean ret = true;
 
 //check whether network cable is connected or not = network interface is working or not
@@ -20,7 +18,7 @@ boolean Connection(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
+	Json ctx = new Json();
 	System.p(Connection(ctx));
 }
 

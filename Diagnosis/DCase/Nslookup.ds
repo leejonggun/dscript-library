@@ -1,15 +1,13 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
+import("Syntax.ShellStyle");
+import("Type.Json");
 import("konoha.string");
-
-const DCaseContext = Json;
 
 String host = "";
 String DNS  = "";
 
-boolean Nslookup(DCaseContext ctx) {
+boolean Nslookup(Json ctx) {
 	host = ctx.getString("hostname");
 
 //check DNS is recognised.
@@ -52,7 +50,7 @@ boolean Nslookup(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
+	Json ctx = new Json();
 	ctx.setString("hostname", SCRIPT_ARGV.get(1));
 	System.p(Nslookup(ctx));
 }

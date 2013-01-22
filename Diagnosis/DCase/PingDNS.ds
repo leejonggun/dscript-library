@@ -1,14 +1,12 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
-
-const DCaseContext = Json;
+import("Syntax.ShellStyle");
+import("Type.Json");
 
 String nameserver = "";
 String resolv = "";
 
-boolean PingDNS(DCaseContext ctx) {
+boolean PingDNS(Json ctx) {
 	boolean ret = true;
 	resolv = ctx.getString("resolv");
 
@@ -27,7 +25,7 @@ boolean PingDNS(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
+	Json ctx = new Json();
 	ctx.setString("resolv", "/etc/resolv.conf");
 	System.p(PingDNS(ctx));
 }

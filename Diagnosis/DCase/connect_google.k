@@ -4,8 +4,8 @@
    run etimedout_client.sh
    */
 import("posix.socket");
-import("konoha.bytes");
-import("dshell");
+import("Syntax.ShellStyle");
+import("Type.Json");
 
 void test() {
 //	destination

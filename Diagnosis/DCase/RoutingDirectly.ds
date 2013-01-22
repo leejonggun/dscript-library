@@ -1,13 +1,11 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
-
-const DCaseContext = Json;
+import("Syntax.ShellStyle");
+import("Type.Json");
 
 String given_host = "";
 
-boolean RoutingDirectly(DCaseContext ctx) {
+boolean RoutingDirectly(Json ctx) {
 	boolean ret = true;
 	int i = 0, routable = 0;
 	given_host = ctx.getString("hostname1");
@@ -31,7 +29,7 @@ boolean RoutingDirectly(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
+	Json ctx = new Json();
 	ctx.setString("hostname1", "192.168.122.179");
 	System.p(RoutingDirectly(ctx));
 }

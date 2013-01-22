@@ -1,10 +1,8 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
+import("Syntax.ShellStyle");
+import("Type.Json");
 import("cstyle");
-
-const DCaseContext = Json;
 
 String host = "";
 
@@ -34,7 +32,7 @@ boolean CheckGiven(String[] given_host) {
 	}
 }
 
-boolean CheckHostOrIP(DCaseContext ctx) {
+boolean CheckHostOrIP(Json ctx) {
 	boolean ret = true;
 	host = ctx.getString("hostname");
 
@@ -45,7 +43,7 @@ boolean CheckHostOrIP(DCaseContext ctx) {
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
+	Json ctx = new Json();
 	ctx.setString("hostname", SCRIPT_ARGV.get(1));
 	CheckHostOrIP(ctx);
 }

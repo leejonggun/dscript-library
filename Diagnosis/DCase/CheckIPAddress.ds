@@ -1,18 +1,17 @@
 // written by Joseph
 
-import("dshell");
-import("konoha.json");
+import("Syntax.ShellStyle");
+import("Type.Json");
 
-const DCaseContext = Json;
-
-boolean CheckIPAddress(DCaseContext ctx) {
+boolean CheckIPAddress(Json ctx) {
 	String ifconfig = $(ifconfig);
-	boolean ret = (ifconfig.search("addr") > -1);
+	ifconfig = ifconfig.substring(0, ifconfig.search("lo"));
+	boolean ret = (ifconfig.search("inet") > -1);
 	return ret;
 }
 
 void main() {
-	DCaseContext ctx = new DCaseContext();
+	Json ctx = new Json();
 	System.p(CheckIPAddress(ctx));
 }
 
