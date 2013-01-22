@@ -3,7 +3,7 @@
 import("Syntax.ShellStyle");
 import("Type.Json");
 
-boolean FirewallIPOutput(Json ctx) {
+boolean FirewallPortOutput(Json ctx) {
 	boolean ret = true;
 
 //get iptables setting
@@ -12,10 +12,10 @@ boolean FirewallIPOutput(Json ctx) {
 	String ifconfig = $(echo "${setting}" | grep "DROP");
 	ifconfig.concat($(echo "${setting}" | grep "REJECT"));
 
-	if (ifconfig.search("DROP") > -1) {
+	if (ifconfig.search("tcp") > -1) {
 		System.p("SystemFault:OUTPUT packet is dropped.");
 		ret = false;
-	} else if (ifconfig.search("REJECT") > -1) {
+	} else if (ifconfig.search("tcp") > -1) {
 		System.p("SystemFault:OUTPUT packet is rejected.");
 		ret = false;
 	}
@@ -25,7 +25,7 @@ boolean FirewallIPOutput(Json ctx) {
 
 void main() {
 	Json ctx = new Json();
-	System.p(FirewallIPOutput(ctx));
+	System.p(FirewallPortOutput(ctx));
 }
 
 main();
