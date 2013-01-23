@@ -2,13 +2,17 @@
 
 import("Syntax.ShellStyle");
 import("Type.Json");
+import("cstyle");
 
 boolean RoutingDirectly(Json ctx) {
 	boolean ret = true;
 	int i = 0, routable = 0;
 	String given_host = ctx.getString("hostname1");
+	System.p(given_host);
 
-	String[] IP = $(gethostip "${given_host}" -d).trim().split(".");//can connect directly.
+	String[] IP = $(gethostip "${given_host}").trim().split(" ");//can connect directly.
+//	String[] IP = $(gethostip www.google.com).trim().split(" ");//can connect directly.
+	System.p(IP);
 
 	given_host = given_host.slice(0, given_host.lastIndexOf("."));
 	String Rtable = $(netstat -rn | grep "${given_host}");

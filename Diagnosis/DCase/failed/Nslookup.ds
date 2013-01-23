@@ -2,25 +2,14 @@
 
 import("Syntax.ShellStyle");
 import("Type.Json");
-import("konoha.string");
 
 boolean Nslookup(Json ctx) {
 	String host = ctx.getString("hostname");
-
-//check DNS is recognised.
-//	String check = $(minikonoha CheckDNS.ds);
-//	if (check.search("false") > -1) {
-//		return false;
-//	}
-
-//check whether DNS respond or not
-//	check = $(minikonoha PingDNS.ds);
-//	if (check.search("false") > -1) {
-//		return false;
-//	}
+	System.p(host);
 
 //First try nslookup
 	String res = $(nslookup "${host}");
+	System.p(res);
 
 	if (res.search("find") != -1) {//can't find <hostname>:REFUSED, No answer, or NXDOMAIN
 		if (res.search("REFUSED") != -1) {

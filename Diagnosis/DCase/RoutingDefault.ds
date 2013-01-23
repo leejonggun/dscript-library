@@ -7,7 +7,7 @@ boolean RoutingDefault(Json ctx) {
 	boolean ret = false;
 
 	String Rtable = $(netstat -rn | grep "UG");
-	if (Rtable.search("UG") > 0) {
+	if (Rtable.search("UG") > -1) {
 		System.p("Success:The gateway is registered. Check its routing settings.");
 		ret = true;
 	}

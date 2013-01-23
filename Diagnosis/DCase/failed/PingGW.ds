@@ -8,10 +8,13 @@ boolean PingGW(Json ctx) {
 
 //get router's IP Address
 	String str = $(ip route show | grep "default");
+	System.p(str);
 	String gateway = str.substring(str.search("192"), str.search("dev"));
+	System.p(gateway);
 
 //ping to the default gateway(router).
 	ping "${gateway}" -c 2 > /dev/null;
+	System.p($?);
 	if ($? != 0) {
 		System.p("SystemFault:ping to the default gateway is failed.");
 		ret = false;

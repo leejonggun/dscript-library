@@ -6,9 +6,11 @@ import("Type.Json");
 boolean CheckDNS(Json ctx) {
 	boolean ret = true;
 	String resolv = ctx.getString("resolvpath");
+	System.p(resolv);
 
 //get nameserver ip address
 	String DNS = $(cat "${resolv}" | grep "nameserver");
+	System.p(DNS);
 
 //"grep" doesn't get any string, then return status will be 0
 //	ret = ($? == 0);

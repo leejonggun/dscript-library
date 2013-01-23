@@ -7,7 +7,7 @@ import("cstyle");
 boolean CheckGiven(String[] given_host) {
 	int i = 0 , j = 0;
 	String tmpIP = given_host.get(0);
-	String[] check_list = {"www", "com", "co", "org", "jp"};//If the given string has one of these words, it is intended as hostname
+	String[] check_list = ["www", "co", "ac", "ne", "com", "org", "net", "jp", "kr", "us"];//If the given string has one of these words, it is intended as hostname
 
 	if (tmpIP.toint() == 0) {//if tmpIP is string String.toint() return 0.
 		while (i < given_host.getlength()) {

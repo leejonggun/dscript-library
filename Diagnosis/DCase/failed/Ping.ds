@@ -5,6 +5,7 @@ import("Type.Json");
 
 boolean Ping(Json ctx) {
 	String host = ctx.getString("hostname");
+	System.p(host);
 	String lookup = "";
 
 	ping "${host}" -c 2 > /dev/null;
