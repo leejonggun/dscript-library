@@ -10,7 +10,7 @@ boolean FirewallPortInput(Json ctx) {
 	String setting = $(sudo iptables -L);
 	setting = setting.substring(0, setting.search("FORWARD"));
 	String ifconfig = $(echo "${setting}" | grep "DROP");
-	ifconfig.concat($(echo "${setting}" | grep "REJECT"));
+	ifconfig = ifconfig.concat($(echo "${setting}" | grep "REJECT"));
 
 	if (ifconfig.search("udp") > -1) {
 		System.p("SystemFault:INPUT packet is dropped.");

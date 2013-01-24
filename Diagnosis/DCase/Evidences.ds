@@ -9,11 +9,11 @@ boolean Evidences(Json ctx) {
 	String result = $(minikonoha Connection.ds);
 	System.p(result);
 
-	result = $(minikonoha FirewallOutput.ds);
-	System.p(result);
+//	result = $(sudo minikonoha FirewallIPOutput.ds);
+//	System.p(result);
 
-	result = $(minikonoha FirewallInput.ds);
-	System.p(result);
+//	result = $(sudo minikonoha FirewallIPInput.ds);
+//	System.p(result);
 
 	result = $(minikonoha CheckDNS.ds);
 	System.p(result);

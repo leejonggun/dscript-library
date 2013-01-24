@@ -3,8 +3,7 @@
    This script is for connect() fault
    run etimedout_client.sh
    */
-import("Syntax.ShellStyle");
-import("Type.Json");
+import("posix.socket");
 
 void test() {
 //	destination

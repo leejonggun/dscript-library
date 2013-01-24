@@ -11,7 +11,7 @@ boolean Connection(Json ctx) {
 	int iface = netstatus.search("eth");
 	iface = iface + netstatus.search("wlan");
 	if (iface < 0) {
-		System.p("SystemFault:Iface is not working.");
+//		System.p("SystemFault:Iface is not working.");
 		return false;
 	};
 	return ret;

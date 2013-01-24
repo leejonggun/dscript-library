@@ -4,8 +4,6 @@
    run etimedout_client.sh
    */
 import("posix.socket");
-import("Syntax.ShellStyle");
-import("Type.Json");
 
 void test() {
 //	destination
