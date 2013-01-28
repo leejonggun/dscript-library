@@ -10,15 +10,17 @@ boolean RoutingDirectly(Json ctx) {
 	String given_host = ctx.getString("hostname1");
 //	System.p(given_host);
 
-	String[] IP = $(gethostip "${given_host}").trim().split(" ");//can connect directly.
-//	String[] IP = $(gethostip www.google.com).trim().split(" ");//can connect directly.
-//	System.p(IP);
+//	String[] IP = $(gethostip "${given_host}").trim().split(" ");//can connect directly.
+	String[] getIP = $(gethostip 192.168.122.179).trim().split(" ");//can connect directly.
+	String IP = getIP.get(1);
+	getIP = IP.split(".");
+//	System.p(getIP);
 
 	given_host = given_host.slice(0, given_host.lastIndexOf("."));
 	String Rtable = $(netstat -rn | grep "${given_host}");
 
-	while (i < IP.getlength() - 1) {
-		routable = Rtable.search(IP.get(i));
+	while (i < getIP.getlength() - 1) {
+		routable = Rtable.search(getIP.get(i));
 		i = i + 1;
 	}
 	if (routable > 0) {
