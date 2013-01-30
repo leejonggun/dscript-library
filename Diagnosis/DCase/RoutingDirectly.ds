@@ -34,7 +34,7 @@ boolean RoutingDirectly(Json ctx) {
 
 void main() {
 	Json ctx = new Json();
-	ctx.setString("hostname1", SCRIPT_ARGV.get(1));
+//	ctx.setString("hostname1", SCRIPT_ARGV.get(1));
 	System.p(RoutingDirectly(ctx));
 }
 

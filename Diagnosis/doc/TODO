@@ -1,7 +1,5 @@
 
-1.DCaseを作成するスクリプトの作成
-2.DCaseDBにDCaseを格納
-3.DCaseDBからsearch,AddCtx等できることを確認
-4.各診断スクリプトのDCase作成
+1.DCaseDBからsearch,AddCtx等できることを確認
+2.各診断スクリプトのDCase作成
 
-6.論文フォーマットのダウンロード、論文書き始め
+3.論文フォーマットのダウンロード、論文書き始め

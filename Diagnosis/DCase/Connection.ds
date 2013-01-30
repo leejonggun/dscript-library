@@ -19,7 +19,9 @@ boolean Connection(Json ctx) {
 
 void main() {
 	Json ctx = new Json();
-	System.p(Connection(ctx));
+//	System.p(Connection(ctx));
+	Connection(ctx);
+	System.p("false");
 }
 
 main();

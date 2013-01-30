@@ -64,8 +64,8 @@ boolean Evidences(Json ctx) {
 //		System.p(result);
 //	}
 
-	result = $(minikonoha Ping.ds 192.168.122.179);
-	System.p(result);
+//	result = $(minikonoha Ping.ds 192.168.122.179);
+//	System.p(result);
 //	ping "${host}" -c 8 > /dev/null;
 //	System.p($?);
 //	if ($? == 0) {//Success

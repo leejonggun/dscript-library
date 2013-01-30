@@ -6,7 +6,7 @@ import("Type.Json");
 boolean RoutingDefault(Json ctx) {
 	boolean ret = false;
 
-	String Rtable = $(netstat -rn | grep "UG");
+	String Rtable = $(route -n | grep "UG");
 	if (Rtable.search("UG") > -1) {
 //		System.p("Success:The gateway is registered.");
 		ret = true;
