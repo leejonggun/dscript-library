@@ -43,9 +43,9 @@ boolean Evidences(Json ctx) {
 	result = $(sudo minikonoha FirewallTCPOutput.ds);
 	System.p(result);
 
-//	result = $(minikonoha CheckHostOrIP.ds "${host}");
-
-//	if (result.search("Hostname") > 0) {
+////	result = $(minikonoha CheckHostOrIP.ds "${host}");
+//
+////	if (result.search("Hostname") > 0) {
 		result = $(minikonoha Nslookup.ds 192.168.122.179);
 		System.p(result);
 //	}
