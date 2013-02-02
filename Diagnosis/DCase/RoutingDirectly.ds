@@ -10,8 +10,7 @@ boolean RoutingDirectly(Json ctx) {
 	String given_host = ctx.getString("hostname1");
 //	System.p(given_host);
 
-//	String[] IP = $(gethostip "${given_host}").trim().split(" ");//can connect directly.
-	String[] getIP = $(gethostip 192.168.122.179).trim().split(" ");//can connect directly.
+	String[] getIP = $(gethostip "${given_host}").trim().split(" ");//can connect directly.
 	String IP = getIP.get(1);
 	getIP = IP.split(".");
 //	System.p(getIP);
@@ -34,7 +33,7 @@ boolean RoutingDirectly(Json ctx) {
 
 void main() {
 	Json ctx = new Json();
-//	ctx.setString("hostname1", SCRIPT_ARGV.get(1));
+	ctx.setString("hostname1", SCRIPT_ARGV.get(1));
 	System.p(RoutingDirectly(ctx));
 }
 

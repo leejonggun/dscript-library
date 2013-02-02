@@ -9,7 +9,7 @@ boolean CheckDNS(Json ctx) {
 	System.p(resolv);
 
 //get nameserver ip address
-	String DNS = $(cat "{resolv}" | grep "nameserver");
+	String DNS = $(cat "${resolv}" | grep "nameserver");
 	System.p(DNS);
 
 //"grep" doesn't get any string, then return status will be 0
