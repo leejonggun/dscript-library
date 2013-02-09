@@ -9,7 +9,7 @@ boolean RecognitionGW(Json ctx) {
 //check whether default gateway is recognized or not
 	int gateway = $(netstat -r).search("UG");
 	if (gateway == -1) {
-		System.p("SystemFault:Network is disconnected.");
+//		System.p("SystemFault:Network is disconnected.");
 		return false;
 	};
 	return ret;

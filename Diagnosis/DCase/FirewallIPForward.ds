@@ -12,10 +12,10 @@ boolean FirewallIPForward(Json ctx) {
 	String ifconfig = $(echo "${setting}" | grep "DROP");
 	ifconfig = ifconfig.concat($(echo "${setting}" | grep "REJECT"));
 
-	if (ifconfig.search("DROP") > -1) {
+	if (ifconfig.search("192.168.59") > -1) {
 		System.p("SystemFault:FORWARD packet is dropped.");
 		ret = false;
-	} else if (ifconfig.search("REJECT") > -1) {
+	} else if (ifconfig.search("192.168.59") > -1) {
 		System.p("SystemFault:FORWARD packet is rejected.");
 		ret = false;
 	}

@@ -1,31 +1,35 @@
 // written by Joseph
 
-import("Syntax.ShellStyle");
-import("Type.Json");
-import("cstyle");
+Import("Syntax.ShellStyle");
+Import("Type.Json");
+Import("cstyle");
+Import("MiniKonoha.Map");
 
 boolean CheckGiven(String[] given_host) {
 	int i = 0 , j = 0;
 	String tmpIP = given_host.get(0);
+	Map[String] check_map = new Map[String]();
 	String[] check_list = ["www", "co", "ac", "ne", "com", "org", "net", "jp", "kr", "us"];//If the given string has one of these words, it is intended as hostname
 
+	//Mapping
+	while(i < check_list.getlength()) {
+		check_map.set(check_list[i], check_list[i]);
+		i = i + 1;
+	}
+
 	if (tmpIP.toint() == 0) {//if tmpIP is string String.toint() return 0.
-		while (i < given_host.getlength()) {
-			tmpIP = given_host.get(i);
-			j = 0;
-			while (j < check_list.getlength()) {
-				if (tmpIP == check_list.get(j)) {
-					System.p("Hostname");
-					return true;
-				}
-				j = j + 1;
+		while (j < given_host.getlength()) {
+			tmpIP = given_host.get(j);
+			if (tmpIP == check_map.get(tmpIP)) {
+//				System.p("Hostname");
+				return true;
 			}
-			i = i + 1;
+			j = j + 1;
 		}
-		System.p("The given host has wrong format.");
+//		System.p("The given host has wrong format.");
 		return false;
 	} else {
-		System.p("IP Address");
+//		System.p("IP Address");
 		return false;
 	}
 }
@@ -43,7 +47,7 @@ boolean CheckHostOrIP(Json ctx) {
 void main() {
 	Json ctx = new Json();
 	ctx.setString("hostname", SCRIPT_ARGV.get(1));
-	CheckHostOrIP(ctx);
+	System.p(CheckHostOrIP(ctx));
 }
 
 main();
