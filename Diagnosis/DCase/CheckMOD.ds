@@ -10,7 +10,6 @@ boolean CheckMOD(Json ctx) {
 	boolean ret = true;
 	String Media = "Ethernet";
 	String Kernel_Driver = "Kernel driver";
-	String Kernel_Modules = "Kernel modules";
 
 //check whether network cable is connected or not = check whether NIC is recognized or not
 	String NIC = $(lspci -nn | grep "${Media}");
@@ -19,32 +18,18 @@ boolean CheckMOD(Json ctx) {
 		return false;
 	};
 
-	String bus_number = NIC.split(" ").get(0);
+	String bus_number = NIC.split(" ").get(0).trim();
 	Kernel_Driver = $(lspci -v -s "${bus_number}" | grep "${Kernel_Driver}");
-	System.p(Kernel_Driver);
 	if (Kernel_Driver == "") {
+//	ドライバがロードされていない
 		return false;
 	}
 
-	Kernel_Modules = $(lspci -v -s "${bus_number}" | grep "${Kernel_Modules}");
-	System.p(Kernel_Modules);
-
 	String Driver_in_use = Kernel_Driver.split(":").get(1).trim();
-	System.p(Driver_in_use);
 
-	String lsmod = $(lsmod | grep "${Driver_in_use}");//なければ接続できない
-	System.p(lsmod);
-
-	String modules = Kernel_Modules.split(":").get(1).trim();//使用可能なモジュール。この中の一つがin useになければいけない
-	System.p(modules);
-	String[] available_modules = modules.split(",");
-	System.p(available_modules);
-	int i = 0;
-	while (i < available_modules.getLength()) {
-		if (Driver_in_use == available_modules[i]) {
-			return true;
-		}
-		i = i + 1;
+	String lsmod = $(lsmod | grep "${Driver_in_use}");//モジュールがなければ接続できない
+	if (lsmod == "") {
+		return false;
 	}
 
 	return ret;
