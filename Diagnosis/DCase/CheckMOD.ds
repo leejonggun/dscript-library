@@ -1,0 +1,55 @@
+// written by Joseph
+
+Import("Syntax.ShellStyle");
+Import("cstyle");
+Import("JavaScript.Regexp");
+Import("Java.String");
+Import("Type.Json");
+
+boolean CheckMOD(Json ctx) {
+	boolean ret = true;
+	String Media = "Ethernet";
+	String Kernel_Driver = "Kernel driver";
+	String Kernel_Modules = "Kernel modules";
+
+//check whether network cable is connected or not = check whether NIC is recognized or not
+	String NIC = $(lspci -nn | grep "${Media}");
+	if (NIC.search(Media) == -1) {
+//		System.p("SystemFault:NIC is not recognised.");
+		return false;
+	};
+
+	String bus_number = NIC.split(" ").get(0);
+	Kernel_Driver = $(lspci -v -s "${bus_number}" | grep "${Kernel_Driver}");
+	System.p(Kernel_Driver);
+
+	Kernel_Modules = $(lspci -v -s "${bus_number}" | grep "${Kernel_Modules}");
+	System.p(Kernel_Modules);
+
+	String Driver_in_use = Kernel_Driver.split(":").get(1).trim();
+	System.p(Driver_in_use);
+
+	String lsmod = $(lsmod | grep "${Driver_in_use}");//なければ接続できない
+	System.p(lsmod);
+
+	String modules = Kernel_Modules.split(":").get(1).trim();//使用可能なモジュール。この中の一つがin useになければいけない
+	System.p(modules);
+	String[] available_modules = modules.split(",");
+	System.p(available_modules);
+	int i = 0;
+	while (i < available_modules.getLength()) {
+		if (modules == available_modules[i]) {
+			return true;
+		}
+		i = i + 1;
+	}
+
+	return ret;
+}
+
+void main() {
+	Json ctx = new Json();
+	System.p(CheckMOD(ctx));
+}
+
+main();
