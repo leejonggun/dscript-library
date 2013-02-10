@@ -22,6 +22,9 @@ boolean CheckMOD(Json ctx) {
 	String bus_number = NIC.split(" ").get(0);
 	Kernel_Driver = $(lspci -v -s "${bus_number}" | grep "${Kernel_Driver}");
 	System.p(Kernel_Driver);
+	if (Kernel_Driver == "") {
+		return false;
+	}
 
 	Kernel_Modules = $(lspci -v -s "${bus_number}" | grep "${Kernel_Modules}");
 	System.p(Kernel_Modules);
@@ -38,7 +41,7 @@ boolean CheckMOD(Json ctx) {
 	System.p(available_modules);
 	int i = 0;
 	while (i < available_modules.getLength()) {
-		if (modules == available_modules[i]) {
+		if (Driver_in_use == available_modules[i]) {
 			return true;
 		}
 		i = i + 1;
