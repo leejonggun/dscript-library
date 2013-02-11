@@ -20,13 +20,13 @@ void fault () {
 	//restore
 //	$(sudo route add -net 192.168.122.0 netmask 255.255.255.0 virbr0);
 
-	//fault
+	//fault Can't route to the VM Server
 //	$(sudo route del -net 192.168.122.0 netmask 255.255.255.0);
 
 	//restore
 //	$(sudo route add default gw 192.168.59.1);
 
-	//fault
+	//fault delete default gateway
 //	$(sudo route del default gw 192.168.59.1);
 
 /*iptables fault*/
