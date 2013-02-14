@@ -19,9 +19,11 @@ void fault () {
 /*del a certain of network on the routing table*/
 	//restore
 //	$(sudo route add -net 192.168.122.0 netmask 255.255.255.0 virbr0);
+//	$(sudo route add -net 192.168.59.0 netmask 255.255.255.0 eth2);
 
-	//fault Can't route to the VM Server
+	//fault Can't route
 //	$(sudo route del -net 192.168.122.0 netmask 255.255.255.0);
+//	$(sudo route del -net 192.168.59.0 netmask 255.255.255.0);
 
 	//restore
 //	$(sudo route add default gw 192.168.59.1);
@@ -31,41 +33,45 @@ void fault () {
 
 /*iptables fault*/
 	//restore
+//$(sudo iptables -P INPUT ACCEPT);
+//$(sudo iptables -P OUTPUT ACCEPT);
+//$(sudo iptables -P FORWARD ACCEPT);
 //$(sudo iptables -F);
 
-	//fault DROP all packets
+	//fault DROP POLICY packets
 //$(sudo iptables -P INPUT DROP);
 //$(sudo iptables -P OUTPUT DROP);
 //$(sudo iptables -P FORWARD DROP);
+//$(sudo iptables -A INPUT -s 192.168.59.40 -j ACCEPT);
+//$(sudo iptables -A OUTPUT -s 192.168.59.40 -j ACCEPT);
+//$(sudo iptables -A FORWARD -s 192.168.59.40 -j ACCEPT);
+
+//$(sudo iptables -A INPUT -s 192.168.59.40 -p tcp --dport 21 -j ACCEPT);
+//$(sudo iptables -A OUTPUT -s 192.168.59.40 -p tcp --dport 21 -j ACCEPT);
+//$(sudo iptables -A FORWARD -s 192.168.59.40 -p tcp --dport 21 -j ACCEPT);
+
+//$(sudo iptables -A INPUT -p tcp --dport 21 -j ACCEPT);
+//$(sudo iptables -A OUTPUT -p tcp --dport 21 -j ACCEPT);
+//$(sudo iptables -A FORWARD -p tcp --dport 21 -j ACCEPT);
+
+//$(sudo iptables -A INPUT -p tcp -j ACCEPT);
+//$(sudo iptables -A OUTPUT -p tcp -j ACCEPT);
+//$(sudo iptables -A FORWARD -p tcp -j ACCEPT);
 
 //	//fault DROP INPUT ftp-control packets
-//$(sudo iptables -A INPUT -p tcp --dport 21 -j DROP);
-//$(sudo iptables -A INPUT -p tcp --sport 21 -j DROP);
+//$(sudo iptables -A INPUT -p tcp --dport 21 -j DROP);//Doesn't matter
+//$(sudo iptables -A INPUT -p tcp --sport 21 -j DROP);//Connect timed out
 //	//fault DROP INPUT ftp-control packets from 192.168.59.77
-//$(sudo iptables -A INPUT -s 192.168.59.77 -p tcp --dport 21 -j DROP);
-//$(sudo iptables -A INPUT -s 192.168.59.77 -p tcp --sport 21 -j DROP);
+//$(sudo iptables -A INPUT -s 192.168.59.77 -p tcp --dport 21 -j DROP);//Doesn't matter
+//$(sudo iptables -A INPUT -s 192.168.59.77 -p tcp --sport 21 -j DROP);//Doesn't matter
 
-//	//fault DROP INPUT ftp-control packets
-//$(sudo iptables -A OUTPUT -p tcp --dport 21 -j DROP);
-//$(sudo iptables -A OUTPUT -p tcp --sport 21 -j DROP);
+	//fault DROP INPUT ftp-control packets
+//$(sudo iptables -A OUTPUT -p tcp --dport 21 -j DROP);//Connect timed out
+//$(sudo iptables -A OUTPUT -p tcp --sport 21 -j DROP);//Doesn't matter
 //	//fault DROP INPUT ftp-control packets to 192.168.59.77
-//$(sudo iptables -A OUTPUT -d 192.168.59.77 -p tcp --dport 21 -j DROP);
-//$(sudo iptables -A OUTPUT -d 192.168.59.77 -p tcp --sport 21 -j DROP);
+//$(sudo iptables -A OUTPUT -d 192.168.59.40 -p tcp --dport 21 -j DROP);//Connect timed out
+//$(sudo iptables -A OUTPUT -d 192.168.59.40 -p tcp --sport 21 -j DROP);//Doesn't matter
 
-//	//fault DROP INPUT ftp-data packets
-//$(sudo iptables -A INPUT -p tcp --dport 20 -j DROP);
-//$(sudo iptables -A INPUT -p tcp --sport 20 -j DROP);
-//	//fault DROP INPUT ftp-data packets from 192.168.59.77
-//$(sudo iptables -A INPUT -s 192.168.59.77 -p tcp --dport 20 -j DROP);
-//$(sudo iptables -A INPUT -s 192.168.59.77 -p tcp --sport 20 -j DROP);
-
-//	//fault DROP INPUT ftp-data packets
-//$(sudo iptables -A OUTPUT -p tcp --dport 20 -j DROP);
-//$(sudo iptables -A OUTPUT -p tcp --sport 20 -j DROP);
-//	//fault DROP INPUT ftp-data packets to 192.168.59.77
-//$(sudo iptables -A OUTPUT -d 192.168.59.77 -p tcp --dport 20 -j DROP);
-//$(sudo iptables -A OUTPUT -d 192.168.59.77 -p tcp --sport 20 -j DROP);
-//System.p($(sudo iptables -L -n));
 //$(sudo iptables -F);
 }
 

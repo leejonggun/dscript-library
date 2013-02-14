@@ -12,11 +12,11 @@ boolean FirewallIPInput(Json ctx) {
 	String ifconfig = $(echo "${setting}" | grep "DROP");
 	ifconfig = ifconfig.concat($(echo "${setting}" | grep "REJECT"));
 
-	if (ifconfig.search("192.168.59") > -1) {
-		System.p("SystemFault:INPUT packet is dropped.");
+	if (ifconfig.search("DROP") > -1) {
+//		System.p("SystemFault:INPUT packet is dropped.");
 		ret = false;
-	} else if (ifconfig.search("192.168.59") > -1) {
-		System.p("SystemFault:INPUT packet is rejected.");
+	} else if (ifconfig.search("REJECT") > -1) {
+//		System.p("SystemFault:INPUT packet is rejected.");
 		ret = false;
 	}
 

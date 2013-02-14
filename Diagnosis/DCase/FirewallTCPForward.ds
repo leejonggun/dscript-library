@@ -13,10 +13,10 @@ boolean FirewallPortInput(Json ctx) {
 	ifconfig = ifconfig.concat($(echo "${setting}" | grep "REJECT"));
 
 	if (ifconfig.search("tcp") > -1) {
-		System.p("SystemFault:FORWARD packet is dropped.");
+//		System.p("SystemFault:FORWARD packet is dropped.");
 		ret = false;
 	} else if (ifconfig.search("tcp") > -1) {
-		System.p("SystemFault:FORWARD packet is rejected.");
+//		System.p("SystemFault:FORWARD packet is rejected.");
 		ret = false;
 	}
 
