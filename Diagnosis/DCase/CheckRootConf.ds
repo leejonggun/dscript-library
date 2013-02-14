@@ -8,7 +8,7 @@ boolean CheckRootConf(Json ctx) {
 	String vsftpd = ctx.getString("confpath");
 
 	String config = $(cat "${vsftpd}" | grep "anon_root");
-	System.p(config);
+//	System.p(config);
 	if (config.startsWith("#")) {
 		ret = false;
 	} else {

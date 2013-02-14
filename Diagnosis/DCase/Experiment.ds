@@ -7,68 +7,86 @@ boolean Evidences(Json ctx) {
 	boolean ret = true;
 	String host = ctx.getString("hostname");
 
-	String result = $(/usr/local/bin/minikonoha CheckNIC.ds);
+	String result = $(/usr/local/bin/konoha CheckNIC.ds);
 	System.p(result);
 
-	String result = $(/usr/local/bin/minikonoha CheckDriver.ds);
+	result = $(/usr/local/bin/konoha CheckDriver.ds);
 	System.p(result);
 
-	String result = $(/usr/local/bin/minikonoha CheckMOD.ds);
+	result = $(/usr/local/bin/konoha CheckMOD.ds);
 	System.p(result);
 
-	String result = $(/usr/local/bin/minikonoha Connection.ds);
+	result = $(/usr/local/bin/konoha Connection.ds);
 	System.p(result);
 
-	String result = $(/usr/local/bin/minikonoha CheckIPAddress.ds);
+	result = $(/usr/local/bin/konoha CheckIPAddress.ds);
 	System.p(result);
 
-	result = $(/usr/local/bin/minikonoha RoutingDirectly.ds "${host}");
+	result = $(/usr/local/bin/konoha RoutingDirectly.ds "${host}");
 	System.p(result);
 
-	result = $(/usr/local/bin/minikonoha RoutingDefault.ds);
+	result = $(/usr/local/bin/konoha RoutingDefault.ds);
 	System.p(result);
 
-//	result = $(/usr/local/bin/minikonoha RecognitionGW.ds);
+//	result = $(/usr/local/bin/konoha RecognitionGW.ds);
 //	System.p(result);
 
-	result = $(sudo /usr/local/bin/minikonoha FirewallPolicyInput.ds);
+	result = $(sudo /usr/local/bin/konoha FirewallPolicyInput.ds);
 	System.p(result);
 
-	result = $(sudo /usr/local/bin/minikonoha FirewallPolicyForward.ds);
+	result = $(sudo /usr/local/bin/konoha FirewallPolicyForward.ds);
 	System.p(result);
 
-	result = $(sudo /usr/local/bin/minikonoha FirewallPolicyOutput.ds);
+	result = $(sudo /usr/local/bin/konoha FirewallPolicyOutput.ds);
 	System.p(result);
 
-	result = $(sudo /usr/local/bin/minikonoha FirewallIPInput.ds);
+	result = $(sudo /usr/local/bin/konoha FirewallIPInput.ds);
 	System.p(result);
 
-	result = $(sudo /usr/local/bin/minikonoha FirewallIPForward.ds);
+	result = $(sudo /usr/local/bin/konoha FirewallIPForward.ds);
 	System.p(result);
 
-	result = $(sudo /usr/local/bin/minikonoha FirewallIPOutput.ds);
+	result = $(sudo /usr/local/bin/konoha FirewallIPOutput.ds);
 	System.p(result);
 
-	result = $(sudo /usr/local/bin/minikonoha FirewallTCPInput.ds);
+	result = $(sudo /usr/local/bin/konoha FirewallTCPInput.ds);
 	System.p(result);
 
-	result = $(sudo /usr/local/bin/minikonoha FirewallTCPForward.ds);
+	result = $(sudo /usr/local/bin/konoha FirewallTCPForward.ds);
 	System.p(result);
 
-	result = $(sudo /usr/local/bin/minikonoha FirewallTCPOutput.ds);
+	result = $(sudo /usr/local/bin/konoha FirewallTCPOutput.ds);
 	System.p(result);
 
-	result = $(/usr/local/bin/minikonoha CheckHostOrIP.ds "${host}");
+	result = $(/usr/local/bin/konoha CheckHostOrIP.ds "${host}");
 
-	if (result.search("Hostname") > 0) {
-		result = $(/usr/local/bin/minikonoha Nslookup.ds "${host}");
+	if (result.search("Hostname") > -1) {
+		result = $(/usr/local/bin/konoha Nslookup.ds "${host}");
 		System.p(result);
 	}
 
-	result = $(sudo /usr/local/bin/minikonoha FirewallFTPOutput.ds);
+	result = $(sudo /usr/local/bin/konoha FirewallFTPInput.ds);
 	System.p(result);
 
-	result = $(sudo /usr/local/bin/minikonoha FirewallFTPInput.ds);
+	result = $(sudo /usr/local/bin/konoha FirewallFTPForward.ds);
+	System.p(result);
+
+	result = $(sudo /usr/local/bin/konoha FirewallFTPOutput.ds);
+	System.p(result);
+
+	result = $(sudo /usr/local/bin/konoha FirewallFTPDataInput.ds);
+	System.p(result);
+
+	result = $(sudo /usr/local/bin/konoha FirewallFTPDataForward.ds);
+	System.p(result);
+
+	result = $(sudo /usr/local/bin/konoha FirewallFTPDataOutput.ds);
+	System.p(result);
+
+	result = $(sudo /usr/local/bin/konoha CheckAnonConf.ds);
+	System.p(result);
+
+	result = $(sudo /usr/local/bin/konoha CheckRootConf.ds);
 	System.p(result);
 
 }
@@ -77,7 +95,7 @@ void main() {
 	Json ctx = new Json();
 //	ctx.setString("hostname", SCRIPT_ARGV.get(1));
 //	ctx.setString("hostname", "www.google.com");
-	ctx.setString("hostname", "192.168.59.40");
+	ctx.setString("hostname", "192.168.2.40");
 	Evidences(ctx);
 }
 
