@@ -36,7 +36,7 @@ void fault () {
 //$(sudo iptables -P INPUT ACCEPT);
 //$(sudo iptables -P OUTPUT ACCEPT);
 //$(sudo iptables -P FORWARD ACCEPT);
-//$(sudo iptables -F);
+$(sudo iptables -F);
 
 	//fault DROP POLICY packets
 //$(sudo iptables -P INPUT DROP);
@@ -72,6 +72,9 @@ void fault () {
 //$(sudo iptables -A OUTPUT -d 192.168.59.40 -p tcp --dport 21 -j DROP);//Connect timed out
 //$(sudo iptables -A OUTPUT -d 192.168.59.40 -p tcp --sport 21 -j DROP);//Doesn't matter
 
+//	//fault ACCEPT OUTPUT ftp-control packets 2.102->2.102
+	$(sudo iptables -A OUTPUT -p tcp --sport 21 -j ACCEPT);
+	$(sudo iptables -A OUTPUT -p tcp --dport 21 -j ACCEPT);
 //$(sudo iptables -F);
 }
 

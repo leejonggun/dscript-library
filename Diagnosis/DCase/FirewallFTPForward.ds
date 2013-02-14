@@ -3,29 +3,27 @@
 import("Syntax.ShellStyle");
 import("Type.Json");
 
-boolean FirewallPortInput(Json ctx) {
+boolean FirewallFTPForward(Json ctx) {
 	boolean ret = true;
 
 //get iptables setting
-	String setting = $(sudo iptables -L);
+	String setting = $(sudo iptables -L -n);
 	setting = setting.substring(setting.search("FORWARD"), setting.search("OUTPUT"));
 	String ifconfig = $(echo "${setting}" | grep "DROP");
 	ifconfig = ifconfig.concat($(echo "${setting}" | grep "REJECT"));
 
-	if (ifconfig.search("udp") > -1) {
-		System.p("SystemFault:FORWARD packet is dropped.");
-		ret = false;
-	} else if (ifconfig.search("udp") > -1) {
-		System.p("SystemFault:FORWARD packet is rejected.");
+	if (ifconfig.search("21") > -1) {
 		ret = false;
 	}
-
+	if (ifconfig.search("21") > -1) {
+		ret = false;
+	}
 	return ret;
 }
 
 void main() {
 	Json ctx = new Json();
-	System.p(FirewallPortInput(ctx));
+	System.p(FirewallFTPForward(ctx));
 }
 
 main();
