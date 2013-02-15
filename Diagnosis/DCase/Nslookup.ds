@@ -5,12 +5,14 @@ import("Type.Json");
 
 boolean Nslookup(Json ctx) {
 	String host = ctx.getString("hostname");
-//	System.p(host);
+	String hostsfile = ctx.getString("hostsfile");
 
-//First try nslookup
+	String hosts = $(cat "${hostsfile}" | grep "${host}");
+	if (hosts.search("${host}") > -1) {
+		return true;
+	}
+
 	String res = $(nslookup "${host}");
-//	System.p(res);
-
 	if (res.search("find") != -1) {//can't find <hostname>:REFUSED, No answer, or NXDOMAIN
 		if (res.search("REFUSED") != -1) {
 			return false;
@@ -38,6 +40,7 @@ boolean Nslookup(Json ctx) {
 void main() {
 	Json ctx = new Json();
 	ctx.setString("hostname", SCRIPT_ARGV.get(1));
+	ctx.setString("hostsfile", "/etc/hosts");
 	System.p(Nslookup(ctx));
 }
 

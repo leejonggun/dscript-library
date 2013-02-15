@@ -22,10 +22,7 @@ boolean Evidences(Json ctx) {
 	result = $(/usr/local/bin/konoha CheckIPAddress.ds);
 	System.p(result);
 
-	result = $(/usr/local/bin/konoha RoutingDirectly.ds "${host}");
-	System.p(result);
-
-	result = $(/usr/local/bin/konoha RoutingDefault.ds);
+	result = $(/usr/local/bin/konoha Routing.ds "${host}");
 	System.p(result);
 
 //	result = $(/usr/local/bin/konoha RecognitionGW.ds);
@@ -60,7 +57,7 @@ boolean Evidences(Json ctx) {
 
 	result = $(/usr/local/bin/konoha CheckHostOrIP.ds "${host}");
 
-	if (result.search("Hostname") > -1) {
+	if (result.search("IP Address") == -1) {
 		result = $(/usr/local/bin/konoha Nslookup.ds "${host}");
 		System.p(result);
 	}
@@ -95,7 +92,7 @@ void main() {
 	Json ctx = new Json();
 //	ctx.setString("hostname", SCRIPT_ARGV.get(1));
 //	ctx.setString("hostname", "www.google.com");
-	ctx.setString("hostname", "192.168.2.40");
+	ctx.setString("hostname", "sumiya");
 	Evidences(ctx);
 }
 
