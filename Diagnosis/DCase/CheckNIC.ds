@@ -7,7 +7,7 @@ boolean CheckNIC(Json ctx) {
 	boolean ret = true;
 
 //check whether network cable is connected or not = check whether NIC is recognized or not
-	String NIC = $(lspci -nn | grep "Ethernet");
+	String NIC = $(/usr/bin/lspci -nn | grep "Ethernet");
 	if (NIC.search("Ethernet") == -1) {
 //		System.p("SystemFault:NIC is not recognised.");
 		return false;

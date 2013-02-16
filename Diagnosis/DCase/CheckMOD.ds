@@ -12,14 +12,14 @@ boolean CheckMOD(Json ctx) {
 	String Kernel_Driver = "Kernel driver";
 
 //check whether network cable is connected or not = check whether NIC is recognized or not
-	String NIC = $(lspci -nn | grep "${Media}");
+	String NIC = $(/usr/bin/lspci | grep "${Media}");
 	if (NIC.search(Media) == -1) {
 //		System.p("SystemFault:NIC is not recognised.");
 		return false;
 	};
 
 	String bus_number = NIC.split(" ").get(0).trim();
-	Kernel_Driver = $(lspci -v -s "${bus_number}" | grep "${Kernel_Driver}");
+	Kernel_Driver = $(/usr/bin/lspci -v -s "${bus_number}" | grep "${Kernel_Driver}");
 	if (Kernel_Driver == "") {
 //	ドライバがロードされていない
 		return false;
@@ -27,8 +27,9 @@ boolean CheckMOD(Json ctx) {
 
 	String Driver_in_use = Kernel_Driver.split(":").get(1).trim();
 
-	String lsmod = $(lsmod | grep "${Driver_in_use}");//モジュールがなければ接続できない
+	String lsmod = $(/sbin/lsmod | grep "${Driver_in_use}");
 	if (lsmod == "") {
+//モジュールがなければ接続できない
 		return false;
 	}
 

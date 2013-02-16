@@ -7,6 +7,9 @@ boolean FirewallPolicyInput(Json ctx) {
 	boolean ret = true;
 
 	String ifconfig = $(sudo iptables -L | grep "INPUT");
+	if (ifconfig == "") {
+		return false;
+	}
 	if (ifconfig.search("DROP") > -1) {
 		ret = false;
 	} else if (ifconfig.search("REJECT") > -1) {

@@ -9,7 +9,7 @@ boolean Routing(Json ctx) {
 	String given_host = ctx.getString("hostname1");
 
 	//get IP Address from the hostname
-	String gethostip = $(gethostip "${given_host}" -d).trim();//can connect directly.
+	String gethostip = $(/usr/bin/gethostip "${given_host}" -d).trim();//can connect directly.
 	if (gethostip == "") {
 		return false;
 		}
@@ -17,7 +17,7 @@ boolean Routing(Json ctx) {
 
 	getIP = getIP.slice(0,3);//Network part of IP Address
 
-	String Rtable = $(netstat -rn | grep "${getIP}");
+	String Rtable = $(/bin/netstat -rn | grep "${getIP}");
 	while (i < getIP.getlength() - 1) {
 		routable = Rtable.search(getIP.get(i));
 		i = i + 1;

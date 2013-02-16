@@ -12,7 +12,7 @@ boolean CheckDriver(Json ctx) {
 	String Kernel_Driver = "Kernel driver";
 	String Kernel_Modules = "Kernel modules";
 
-	String lspci_value = $(lspci -k | grep -A 3 "${Media}");
+	String lspci_value = $(/usr/bin/lspci -k | grep -A 3 "${Media}");
 //	System.p(lspci_value);
 
 	Kernel_Driver = $(echo "${lspci_value}" | grep "${Kernel_Driver}");

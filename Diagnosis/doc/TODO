@@ -1,7 +1,8 @@
 
-1.実験(1例としてFTP)
-2.書きなおしたDCaseのDBとの連携
-3.Rebuttalの動作確認。
+1.実験(1例としてFTP):なぜ実験するのか?
+
+2.書きなおしたDCaseのDBとの連携。DScriptEvidenceの表示、実行。
+3.Rebuttalの導入。
 4.資料直し
 5.各診断スクリプトのDCase作成
 

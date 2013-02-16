@@ -7,9 +7,12 @@ boolean Connection(Json ctx) {
 	boolean ret = true;
 
 //check whether network cable is connected or not = network interface is working or not
-	String netstatus = $(netstat -rn);
+	String netstatus = $(/bin/netstat -rn);
+	if (netstatus == "") {
+		return false;
+	}
 	int iface = netstatus.search("eth");
-	iface = iface + netstatus.search("wlan");
+//	iface = iface + netstatus.search("wlan");
 	if (iface < 0) {
 //		System.p("SystemFault:Iface is not working.");
 		return false;

@@ -7,6 +7,9 @@ boolean FirewallFTPDataInput(Json ctx) {
 	boolean ret = true;
 
 	String setting = $(sudo iptables -L -n);
+	if (setting == "") {
+		return false;
+	}
 	setting = setting.substring(0, setting.search("FORWARD"));
 	String policy = setting.substring(0, setting.indexOf("\n"));
 	String rules = $(echo "${setting}" | grep "ACCEPT");

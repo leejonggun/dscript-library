@@ -8,6 +8,9 @@ boolean CheckAnonConf(Json ctx) {
 	String vsftpd = ctx.getString("confpath");
 
 	String config = $(cat "${vsftpd}" | grep "anonymous_enable");
+	if (config == "") {
+		return false;
+	}
 //	System.p(config);
 	if (config.startsWith("#")) {
 		ret = false;
