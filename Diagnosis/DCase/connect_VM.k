@@ -20,6 +20,10 @@ void test() {
 
 //	socket connect(System.connect())
 	int ret = System.connect(sockfd, dstIP, dstPort, dstFamily);
+//	while(1) {
+//		sendto
+//
+//	}
 //	int ret = System.sendto(sockfd, dstIP, dstPort, dstFamily);
 	System.p(ret);
 	System.close(sockfd);

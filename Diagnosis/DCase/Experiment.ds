@@ -28,15 +28,6 @@ boolean Evidences(Json ctx) {
 //	result = $(/usr/local/bin/konoha RecognitionGW.ds);
 //	System.p(result);
 
-	result = $(sudo /usr/local/bin/konoha FirewallPolicyInput.ds);
-	System.p(result);
-
-	result = $(sudo /usr/local/bin/konoha FirewallPolicyForward.ds);
-	System.p(result);
-
-	result = $(sudo /usr/local/bin/konoha FirewallPolicyOutput.ds);
-	System.p(result);
-
 	result = $(sudo /usr/local/bin/konoha FirewallIPInput.ds);
 	System.p(result);
 
@@ -44,6 +35,15 @@ boolean Evidences(Json ctx) {
 	System.p(result);
 
 	result = $(sudo /usr/local/bin/konoha FirewallIPOutput.ds);
+	System.p(result);
+
+	result = $(sudo /usr/local/bin/konoha FirewallPolicyInput.ds);
+	System.p(result);
+
+	result = $(sudo /usr/local/bin/konoha FirewallPolicyForward.ds);
+	System.p(result);
+
+	result = $(sudo /usr/local/bin/konoha FirewallPolicyOutput.ds);
 	System.p(result);
 
 	result = $(sudo /usr/local/bin/konoha FirewallTCPInput.ds);
@@ -83,8 +83,8 @@ boolean Evidences(Json ctx) {
 	result = $(sudo /usr/local/bin/konoha CheckAnonConf.ds);
 	System.p(result);
 
-	result = $(sudo /usr/local/bin/konoha CheckRootConf.ds);
-	System.p(result);
+//	result = $(sudo /usr/local/bin/konoha CheckRootConf.ds);
+//	System.p(result);
 
 }
 
