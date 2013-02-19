@@ -19,6 +19,7 @@ void test() {
 	int dstType = SOCK_STREAM;
 	int dstOPT = 0;
 
+	String msgfrom = "";
 	SockAddr remoteInfo = new SockAddr();
 
 //	socket socket(System.socket())
@@ -31,12 +32,14 @@ void test() {
 //	socket listen(System.listen())
 	ret = System.listen(sockfd, SOMAXCONN);
 
-	while (true) {
+//	while (true) {
 		System.p("Preparing to accept...");
-		System.accept(sockfd, remoteInfo);
-	}
-//	int ret = System.sendto(sockfd, dstIP, dstPort, dstFamily);
-	System.p(ret);
+		ret = System.accept(sockfd, remoteInfo);
+
+		ret = System.recv(sockfd, msgfrom, 0);
+		System.p(ret);
+//	}
+		System.p(msgfrom);
 	System.close(sockfd);
 }
 
