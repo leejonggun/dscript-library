@@ -29,9 +29,9 @@ void test() {
 	int ret = System.bind(sockfd, dstIP, dstPort, dstFamily);
 
 //	socket listen(System.listen())
-	ret = System.listen(sockfd, dstIP, dstPort, dstFamily);
+	ret = System.listen(sockfd, SOMAXCONN);
 
-	while (1) {
+	while (true) {
 		System.p("Preparing to accept...");
 		System.accept(sockfd, remoteInfo);
 	}

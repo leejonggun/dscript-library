@@ -4,6 +4,7 @@
    run etimedout_client.sh
    */
 Import("posix.socket");
+Import("cstyle");
 
 void test() {
 //	destination
@@ -21,12 +22,18 @@ void test() {
 //	socket connect(System.connect())
 	int ret = System.connect(sockfd, dstIP, dstPort, dstFamily);
 
+//	int i = 1;
+//	while (true) {
+//		ret = System.connect(sockfd, dstIP, dstPort, dstFamily);
+//		System.p("connect success. ret = " + ret);
+//	}
 	Bytes msg = "Hello world!".toBytes();
-	while(1) {
-		ret = sendto(fd, msg, 0, dstIP, dstPort, dstFamily);
-		System.p("Sent a message\"Hello world!\" to server");
+	while (true) {
+		//rebind System.sendto() function
+			ret = System.sendto(sockfd, msg, 0, dstIP, dstPort, dstFamily);
+			System.p("Sent a message\"Hello world!\" to server");
 	}
-//	int ret = System.sendto(sockfd, dstIP, dstPort, dstFamily);
+	int ret = System.sendto(sockfd, dstIP, dstPort, dstFamily);
 	System.close(sockfd);
 }
 
