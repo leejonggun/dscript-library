@@ -3,27 +3,38 @@
    This script is for connect() fault
    run etimedout_client.sh
    */
-import("posix.socket");
+Import("posix.socket");
 
 void test() {
 //	destination
 	String dstIP = "192.168.122.179";
 	System.p(dstIP);
-	int dstPort = 10001;
+	int srcPort = 10001;
+	int srcFamily = AF_INET;
+	int srcType = SOCK_STREAM;
+	int srcOPT = 0;
+
+	int dstPort = 10002;
 	int dstFamily = AF_INET;
 	int dstType = SOCK_STREAM;
 	int dstOPT = 0;
+
+	SockAddr remoteInfo = new SockAddr();
 
 //	socket socket(System.socket())
 	int sockfd = System.socket(dstFamily, dstType, dstOPT);
 	System.p(sockfd);
 
-//	socket connect(System.connect())
-	int ret = System.connect(sockfd, dstIP, dstPort, dstFamily);
-//	while(1) {
-//		sendto
-//
-//	}
+//	socket bind(System.bind())
+	int ret = System.bind(sockfd, dstIP, dstPort, dstFamily);
+
+//	socket listen(System.listen())
+	ret = System.listen(sockfd, dstIP, dstPort, dstFamily);
+
+	while (1) {
+		System.p("Preparing to accept...");
+		System.accept(sockfd, remoteInfo);
+	}
 //	int ret = System.sendto(sockfd, dstIP, dstPort, dstFamily);
 	System.p(ret);
 	System.close(sockfd);
